@@ -1,0 +1,3 @@
+(library
+ (name minttea)
+ (libraries riot uutf))
