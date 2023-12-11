@@ -1,16 +1,20 @@
-type s = { counter : int; keys : string list };;
+open Minttea
 
-Minttea.app
-  ~initial_model:(fun () -> { counter = 0; keys = [] })
-  ~init:(fun _ -> Noop)
-  ~update:(fun ~msg model ->
-    match msg with
-    | KeyDown "q" -> (model, Quit)
-    | KeyDown k ->
-        let model = { counter = model.counter + 1; keys = k :: model.keys } in
-        (model, Noop))
-  ~view:(fun model ->
-    if model.counter = -1 then "goodbye! "
-    else Printf.sprintf "%d - %s" model.counter (String.concat ", " model.keys))
-  ()
-|> Minttea.start
+type s = { counter : int; keys : string list }
+
+let init _ = Command.Noop
+let initial_model () = { counter = 0; keys = [] }
+
+let update event model =
+  match event with
+  | Event.KeyDown "q" -> (model, Command.Quit)
+  | Event.KeyDown k ->
+      let model = { counter = model.counter + 1; keys = model.keys @ [ k ] } in
+      (model, Command.Noop)
+
+let view model =
+  if model.counter = -1 then "goodbye! "
+  else Printf.sprintf "%d - %s" model.counter (String.concat "" model.keys)
+
+let app = Minttea.app ~initial_model ~init ~update ~view ()
+let () = Minttea.start app
