@@ -14,9 +14,7 @@ let update event model =
   | _ -> (model, Command.Noop)
 
 let view model =
-  if model = 0 then "\n\n     Bye!\n\n"
-  else
-    Format.sprintf "\n\n     Hi. This program will exit in %d seconds...\n\n"
-      model
+  Format.sprintf "\n\n     Hi. This program will exit in %d seconds...\n\n"
+    model
 
 let () = Minttea.app ~init ~initial_model ~update ~view () |> Minttea.start
