@@ -19,6 +19,7 @@ and handle_input renderer app model event =
   match handle_cmd cmd renderer with
   | exception Exit ->
       Renderer.render renderer view;
+      Renderer.exit_alt_screen renderer;
       Renderer.shutdown renderer;
       wait_pids [ renderer ]
   | () ->

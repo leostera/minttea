@@ -48,9 +48,10 @@ and flush t =
   let new_lines_this_flush = List.length new_lines in
 
   (* clean last rendered lines *)
+  if t.lines_rendered > 0 then
   for _i = 1 to t.lines_rendered do
-    Terminal.clear_line ();
-    Terminal.cursor_up 1
+    Terminal.cursor_up 1;
+    Terminal.clear_line ()
   done;
 
   (* reset screen if its on alt *)
