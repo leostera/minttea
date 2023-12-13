@@ -1,5 +1,10 @@
 open Minttea
 
+let dark_gray = Spices.color "241"
+let help = Spices.(default |> faint true |> fg dark_gray)
+let keyword fmt = Spices.(help |> bold true |> build) fmt
+let help fmt = Spices.(help |> build) fmt
+
 type state = {
   measured : float;
   start_time : Ptime.t;
@@ -20,7 +25,7 @@ let initial_model () =
 
 let update event model =
   match event with
-  | Event.KeyDown "space" ->
+  | Event.KeyDown "r" ->
       let start_time = Ptime_clock.now () in
       let measured = 0. in
       ({ model with start_time; measured }, Command.Set_timer (ref, 0.01))
@@ -46,8 +51,11 @@ let update event model =
 let view model =
   if model.quit then Format.sprintf "%.3fs" model.measured
   else
-    Format.sprintf "Elapsed: %.3fs\n\n q: quit • space: reset • s: %s"
-      model.measured
-      (if model.stopped then "start" else "stop")
+    let help =
+      "  " ^ (keyword "s") ^
+        (help " %s • " (if model.stopped then "start" else "stop")) ^
+        (keyword "r") ^ (help " reset • ")^ (keyword "q")^ (help " quit ")
+    in
+    Format.sprintf "Elapsed: %.3fs\n\n%s" model.measured help
 
 let () = Minttea.app ~init ~initial_model ~update ~view () |> Minttea.start

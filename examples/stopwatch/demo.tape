@@ -12,9 +12,9 @@ Enter
 Sleep 2s
 Type "s"
 Sleep 1s
-Type "s"
+Type "r"
 Sleep 1s
-Space
+Type "s"
 Sleep 1s
 Type "q"
 Sleep 1s

@@ -13,8 +13,16 @@ let update event model =
       else (model, Command.Set_timer (ref, 1.0))
   | _ -> (model, Command.Noop)
 
+let dark_gray = Spices.color "#767676"
+let hi_style = Spices.(default |> bold true)
+
+let time_style =
+  Spices.(default |> italic true |> fg dark_gray |> max_width 22)
+
 let view model =
-  Format.sprintf "\n\n     Hi. This program will exit in %d seconds...\n\n"
-    model
+  let hi = Spices.render hi_style "Hi" in
+  let seconds = Spices.render time_style "%d seconds" model in
+  Spices.(
+    render default "\n\n     %s. This program will exit in %s...\n\n" hi seconds)
 
 let () = Minttea.app ~init ~initial_model ~update ~view () |> Minttea.start
