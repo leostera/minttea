@@ -49,10 +49,10 @@ and flush t =
 
   (* clean last rendered lines *)
   if t.lines_rendered > 0 then
-  for _i = 1 to t.lines_rendered do
-    Terminal.cursor_up 1;
-    Terminal.clear_line ()
-  done;
+    for _i = 1 to t.lines_rendered do
+      Terminal.cursor_up 1;
+      Terminal.clear_line ()
+    done;
 
   (* reset screen if its on alt *)
   List.iter (fun line -> Printf.printf "%s\r\n%!" line) new_lines;

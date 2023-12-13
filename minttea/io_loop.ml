@@ -19,7 +19,7 @@ let translate = function " " -> "space" | key -> key
 
 let try_read src =
   let bytes = Bytes.create 8 in
-  match Unix.read stdin_fd bytes 0 8 with 
+  match Unix.read stdin_fd bytes 0 8 with
   | exception Unix.(Unix_error ((EINTR | EAGAIN | EWOULDBLOCK), _, _)) -> ()
   | len -> Uutf.Manual.src src bytes 0 len
 
@@ -33,7 +33,7 @@ let rec read_inputs src =
   | `End ->
       yield ();
       read_inputs src
-  | `Await -> 
+  | `Await ->
       try_read src;
       yield ();
       read_inputs src

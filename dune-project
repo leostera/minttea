@@ -23,4 +23,20 @@
  (tags
   (topics "to describe" your project)))
 
+(package
+ (name spices)
+ (synopsis "A short synopsis")
+ (description "A longer description")
+ (depends (ocaml (>= "5.1")) (dune (>= "3.11")) (riot (>= "0.0.4")))
+ (tags
+  (topics "to describe" your project)))
+
+(package
+ (name terminal)
+ (synopsis "A short synopsis")
+ (description "A longer description")
+ (depends (ocaml (>= "5.1")) (dune (>= "3.11")) (riot (>= "0.0.4")))
+ (tags
+  (topics "to describe" your project)))
+
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
