@@ -6,6 +6,12 @@
     <img src="./altscreen-toggle/demo.gif"/>
 </a>
 
+## FPS Counter
+
+<a href="./fps/main.ml">
+    <img src="./fps/demo.gif"/>
+</a>
+
 ## Fullscreen
 
 <a href="./fullscreen/main.ml">
