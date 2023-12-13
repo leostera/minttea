@@ -1,11 +1,19 @@
+open Riot
+
 module Event : sig
-  type t = KeyDown of string
+  type t = KeyDown of string | Timer of unit Ref.t
 
   val pp : Format.formatter -> t -> unit
 end
 
 module Command : sig
-  type t = Noop | Quit | Exit_alt_screen | Enter_alt_screen
+  type t =
+    | Noop
+    | Quit
+    | Exit_alt_screen
+    | Enter_alt_screen
+    | Seq of t list
+    | Set_timer of unit Riot.Ref.t * float
 end
 
 module App : sig

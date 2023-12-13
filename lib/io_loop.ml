@@ -17,8 +17,14 @@ let set_raw_mode () =
 let restore_mode termios = Unix.tcsetattr stdin_fd TCSANOW termios
 let translate = function " " -> "space" | key -> key
 
-let rec read_inputs stdin =
-  match Uutf.decode stdin with
+let try_read src =
+  let bytes = Bytes.create 8 in
+  match Unix.read stdin_fd bytes 0 8 with 
+  | exception Unix.(Unix_error ((EINTR | EAGAIN | EWOULDBLOCK), _, _)) -> ()
+  | len -> Uutf.Manual.src src bytes 0 len
+
+let rec read_inputs src =
+  match Uutf.decode src with
   | `Uchar u ->
       let buf = Buffer.create 8 in
       Uutf.Buffer.add_utf_8 buf u;
@@ -26,17 +32,21 @@ let rec read_inputs stdin =
       KeyDown (translate key)
   | `End ->
       yield ();
-      read_inputs stdin
+      read_inputs src
+  | `Await -> 
+      try_read src;
+      yield ();
+      read_inputs src
   | _ -> assert false
 
-let rec run () =
-  let stdin = Uutf.decoder ~encoding:`UTF_8 (`Channel stdin) in
+let rec run runner =
+  let stdin = Uutf.decoder ~encoding:`UTF_8 `Manual in
   let msg = read_inputs stdin in
-  send_by_name ~name:"Minttea.runner" (Input msg);
+  send runner (Input msg);
   yield ();
-  run ()
+  run runner
 
-let spawn_link () =
-  spawn_link @@ fun () ->
+let run runner =
+  Unix.set_nonblock stdin_fd;
   let original_termios = set_raw_mode () in
-  Fun.protect ~finally:(fun () -> restore_mode original_termios) run
+  Fun.protect ~finally:(fun () -> restore_mode original_termios) (run runner)

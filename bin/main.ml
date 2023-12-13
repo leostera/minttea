@@ -11,6 +11,7 @@ let update event model =
   | Event.KeyDown k ->
       let model = { counter = model.counter + 1; keys = model.keys @ [ k ] } in
       (model, Command.Noop)
+  | _ -> (model, Command.Noop)
 
 let view model =
   if model.counter = -1 then "goodbye! "
