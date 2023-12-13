@@ -1,13 +1,12 @@
 open Riot
-
 module Event = Event
 module Command = Command
 module App = App
 
 let app = App.make
 
-let start t =
-  let prog = Program.make t in
+let start app =
+  let prog = Program.make ~app ~fps:60 in
   let module App = struct
     let name = "my_app"
 

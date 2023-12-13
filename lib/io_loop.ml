@@ -1,6 +1,7 @@
 open Riot
-open Messages
 open Event
+
+type Message.t += Input of Event.t
 
 let stdin_fd = Unix.descr_of_in_channel stdin
 
@@ -14,6 +15,7 @@ let set_raw_mode () =
   termios
 
 let restore_mode termios = Unix.tcsetattr stdin_fd TCSANOW termios
+let translate = function " " -> "space" | key -> key
 
 let rec read_inputs stdin =
   match Uutf.decode stdin with
@@ -21,7 +23,7 @@ let rec read_inputs stdin =
       let buf = Buffer.create 8 in
       Uutf.Buffer.add_utf_8 buf u;
       let key = Buffer.contents buf in
-      KeyDown key
+      KeyDown (translate key)
   | `End ->
       yield ();
       read_inputs stdin
