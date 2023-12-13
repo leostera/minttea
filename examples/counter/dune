@@ -1,4 +1,3 @@
 (executable
- (public_name minttea)
  (name main)
  (libraries minttea))

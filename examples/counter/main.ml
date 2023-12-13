@@ -9,6 +9,7 @@ let update event model =
   match event with
   | Event.KeyDown "q" -> (model, Command.Quit)
   | Event.KeyDown k ->
+      let k = if k = "space" then " " else k in
       let model = { counter = model.counter + 1; keys = model.keys @ [ k ] } in
       (model, Command.Noop)
   | _ -> (model, Command.Noop)
