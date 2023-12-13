@@ -1,9 +1,8 @@
 type color
 
-val color :
-  ?profile:Terminal.Profile.t -> string -> color
+val color : ?profile:Terminal.Profile.t -> string -> color
 
-type style 
+type style
 
 val default : style
 val bg : color -> style -> style
@@ -27,5 +26,4 @@ val reverse : bool -> style -> style
 val strikethrough : bool -> style -> style
 val underline : bool -> style -> style
 val width : int option -> style -> style
-
 val build : style -> ('a, Format.formatter, unit, string) format4 -> 'a

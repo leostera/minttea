@@ -41,7 +41,9 @@ let rec loop t =
       loop t
   | _ -> loop t
 
-and tick t = if is_empty t || same_as_last_flush t then () else flush t
+and tick t =
+  if is_empty t || same_as_last_flush t then () else flush t;
+  send_by_name ~name:"Minttea.runner" (Io_loop.Input Event.Frame)
 
 and flush t =
   let new_lines = lines t in
@@ -84,7 +86,7 @@ and handle_exit_alt_screen t =
 
 let max_fps = 120
 let cap fps = Int.max 1 (Int.min fps max_fps) |> Int.to_float
-let fps_to_float fps = 1_000.0 /. cap fps /. 1_000.0
+let fps_to_float fps = 1. /. cap fps
 
 let run ~fps =
   let ticker =

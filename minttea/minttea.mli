@@ -1,7 +1,7 @@
 open Riot
 
 module Event : sig
-  type t = KeyDown of string | Timer of unit Ref.t
+  type t = KeyDown of string | Timer of unit Ref.t | Frame
 
   val pp : Format.formatter -> t -> unit
 end

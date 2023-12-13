@@ -49,7 +49,11 @@ let init { app; _ } renderer =
 let run ({ fps; _ } as t) =
   Printexc.record_backtrace true;
   let renderer = spawn (fun () -> Renderer.run ~fps) in
-  let runner = spawn (fun () -> init t renderer) in
+  let runner =
+    spawn (fun () ->
+        register "Minttea.runner" (self ());
+        init t renderer)
+  in
   let io = spawn (fun () -> Io_loop.run runner) in
   link io;
   wait_pids [ runner ];
