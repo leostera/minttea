@@ -42,14 +42,3 @@
    (dune (>= "3.11"))
    (tty (= :version)))
  (tags (styling styles declarative framework tui "terminal-ui" apps)))
-
-(package
- (name tty)
- (synopsis "A library for interacting with teletype and terminal emulators")
- (description "TTY is a library for directly interacting with teletypes and terminal emulators, including escape sequences, colors, and consuming stdin")
- (depends
-   (ocaml (>= "5.1"))
-   (dune (>= "3.11"))
-   (uutf (>= "1.0.3")))
- (tags (terminal ansi tty teletype utf8)))
-

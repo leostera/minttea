@@ -1,4 +1,5 @@
 open Riot
+open Tty
 
 type Message.t +=
   | Render of string
