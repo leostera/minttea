@@ -23,3 +23,9 @@
 <a href="./stopwatch/main.ml">
     <img src="./stopwatch/demo.gif"/>
 </a>
+
+## Views
+
+<a href="./views/main.ml">
+    <img src="./views/demo.gif"/>
+</a>

@@ -5,3 +5,5 @@ A fun, functional, and stateful way to build terminal apps in OCaml heavily insp
 built on Riot and uses The Elm Architecture.
 
 [bubbletea]: https://github.com/charmbracelet/bubbletea
+
+<img src="./examples/views/demo.gif"/>

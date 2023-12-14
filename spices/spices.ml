@@ -104,7 +104,7 @@ let do_render t str =
 
   (* render core text *)
   let str =
-    let buf = Buffer.create (String.length str) in
+    let buf = Buffer.create 1024 in
     let fmt = Format.formatter_of_buffer buf in
 
     let lines = String.split_on_char '\n' str in
@@ -133,7 +133,7 @@ let do_render t str =
   !str
 
 let build t fmt =
-  let buf = Buffer.create 128 in
+  let buf = Buffer.create 1024 in
   Format.kfprintf
     (fun _ -> do_render t (Buffer.contents buf))
     (Format.formatter_of_buffer buf)

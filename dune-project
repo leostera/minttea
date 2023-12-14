@@ -4,39 +4,39 @@
 
 (generate_opam_files true)
 
-(source
- (github username/reponame))
+(source (github leostera/minttea))
 
-(authors "Author Name")
+(authors "Leandro Ostera <leandro@abstractmachines.dev>")
 
-(maintainers "Maintainer Name")
+(maintainers "Leandro Ostera <leandro@abstractmachines.dev>")
 
-(license LICENSE)
-
-(documentation https://url/to/documentation)
+(license MIT)
 
 (package
  (name minttea)
- (synopsis "A short synopsis")
+ (synopsis "A fun, functional, and stateful way to build terminal apps in OCaml heavily inspired by Go's BubbleTea")
  (description "A longer description")
  (depends (ocaml (>= "5.1")) (dune (>= "3.11")) (riot (>= "0.0.4")))
- (tags
-  (topics "to describe" your project)))
+ (tags (tui "terminal-ui" framework riot)))
+
+(package
+ (name leaves)
+ (synopsis "A collection of reusable components from Mint Tea")
+ (description "A longer description")
+ (depends (ocaml (>= "5.1")) (dune (>= "3.11")) spices)
+ (tags (tui "terminal-ui" apps components component library)))
 
 (package
  (name spices)
- (synopsis "A short synopsis")
+ (synopsis "Declarative styles for TUI applications")
  (description "A longer description")
- (depends (ocaml (>= "5.1")) (dune (>= "3.11")) (riot (>= "0.0.4")))
- (tags
-  (topics "to describe" your project)))
+ (depends (ocaml (>= "5.1")) (dune (>= "3.11")) terminal)
+ (tags (styling styles declarative framework tui "terminal-ui" apps)))
 
 (package
  (name terminal)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends (ocaml (>= "5.1")) (dune (>= "3.11")) (riot (>= "0.0.4")))
- (tags
-  (topics "to describe" your project)))
+ (depends (ocaml (>= "5.1")) (dune (>= "3.11")))
+ (tags (topics "to describe" your project)))
 
-; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project

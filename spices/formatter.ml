@@ -25,9 +25,9 @@ let to_string fmt =
   | Cross_out -> Escape_seq.cross_out_seq
   | Overline -> Escape_seq.overline_seq
   | Foreground color ->
-      Escape_seq.foreground_seq ^ Color.to_escape_seq ~mode:`fg color
+      Escape_seq.foreground_seq ^ ";" ^ Color.to_escape_seq ~mode:`fg color
   | Background color ->
-      Escape_seq.background_seq ^ Color.to_escape_seq ~mode:`bg color
+      Escape_seq.background_seq ^ ";" ^ Color.to_escape_seq ~mode:`bg color
 
 let format fmt seqs line =
   let seqs = List.map to_string seqs |> String.concat ";" in

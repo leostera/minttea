@@ -1,3 +1,3 @@
 (executable
  (name main)
- (libraries minttea spices))
+ (libraries minttea spices leaves))

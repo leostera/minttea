@@ -31,12 +31,12 @@ let make str =
 
 let to_escape_seq ~mode t =
   match t with
-  | RGB (r, g, b) -> Format.sprintf ";2;%d;%d;%d" r g b
+  | RGB (r, g, b) -> Format.sprintf "2;%d;%d;%d" r g b
   | ANSI c ->
       let bg_mod x = if mode = `bg then x + 10 else x in
       let c = if c < 8 then bg_mod c + 30 else bg_mod (c - 8) + 90 in
       Int.to_string c
-  | ANSI256 c -> Format.sprintf ";5;%d" c
+  | ANSI256 c -> Format.sprintf "5;%d" c
   | No_color -> ""
 
 let is_no_color t = t = No_color
