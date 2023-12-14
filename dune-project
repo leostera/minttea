@@ -19,7 +19,7 @@
  (depends
    (ocaml (>= "5.1"))
    (dune (>= "3.11"))
-   (riot (>= "0.0.4"))
+   (riot (>= "0.0.5"))
    (tty (= :version)))
  (tags (tui "terminal-ui" framework riot)))
 
