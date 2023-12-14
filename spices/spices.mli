@@ -1,6 +1,6 @@
 type color
 
-val color : ?profile:Terminal.Profile.t -> string -> color
+val color : ?profile:Tty.Profile.t -> string -> color
 
 type style
 

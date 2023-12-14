@@ -1,10 +1,10 @@
 [@@@warning "-69"]
 
-type color = Terminal.Color.t
+type color = Tty.Color.t
 
-let color ?(profile = Terminal.Profile.default) raw =
-  let color = Terminal.Color.make raw in
-  let color = Terminal.Profile.convert profile color in
+let color ?(profile = Tty.Profile.default) raw =
+  let color = Tty.Color.make raw in
+  let color = Tty.Profile.convert profile color in
   color
 
 type style = {
@@ -91,11 +91,11 @@ let do_render t str =
         (if t.strikethrough then [ Cross_out ] else []);
         (if t.underline then [ Underline ] else []);
         (match t.foreground with
-        | Some color when Terminal.Color.is_no_color color -> []
+        | Some color when Tty.Color.is_no_color color -> []
         | Some color -> [ Foreground color ]
         | None -> []);
         (match t.background with
-        | Some color when Terminal.Color.is_no_color color -> []
+        | Some color when Tty.Color.is_no_color color -> []
         | Some color -> [ Background color ]
         | None -> []);
       ]

@@ -18,10 +18,12 @@ let bar ~width ?(color_ramp = default_color_ramp 100)
 
   ignore color_ramp;
   let color _i = full_char in
-  List.init full_size color |> List.iter (fun cell -> Format.fprintf fmt "%s" cell);
+  List.init full_size color
+  |> List.iter (fun cell -> Format.fprintf fmt "%s" cell);
 
   let empty_size = Int.max 0 (width - full_size) in
-  List.init empty_size (fun _ -> empty_char) |> List.iter (fun cell -> Format.fprintf fmt "%s" cell);
+  List.init empty_size (fun _ -> empty_char)
+  |> List.iter (fun cell -> Format.fprintf fmt "%s" cell);
 
   Format.fprintf fmt "%.2f%%%!" (percent *. 100.);
 

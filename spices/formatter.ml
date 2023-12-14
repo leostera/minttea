@@ -1,4 +1,4 @@
-open Terminal
+open Tty
 
 type format =
   | Reset
