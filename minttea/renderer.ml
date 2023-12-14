@@ -1,7 +1,5 @@
 open Riot
 
-[@@@warning "-32"]
-
 type Message.t +=
   | Render of string
   | Enter_alt_screen

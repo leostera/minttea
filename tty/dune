@@ -1,3 +1,4 @@
 (library
  (public_name tty)
- (name tty))
+ (name tty)
+ (libraries uutf unix))

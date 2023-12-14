@@ -16,6 +16,7 @@ let bar ~width ?(color_ramp = default_color_ramp 100)
   let percent = Float.max 0. (Float.min 1. percent) in
   let full_size = Int.of_float (Float.floor (w *. percent)) in
 
+  (* let color i = Spices.(default |> fg color_ramp.(i) |> build) "%s" full_char in *)
   ignore color_ramp;
   let color _i = full_char in
   List.init full_size color
@@ -25,6 +26,6 @@ let bar ~width ?(color_ramp = default_color_ramp 100)
   List.init empty_size (fun _ -> empty_char)
   |> List.iter (fun cell -> Format.fprintf fmt "%s" cell);
 
-  Format.fprintf fmt "%.2f%%%!" (percent *. 100.);
+  Format.fprintf fmt "%4.1f%%%!" (percent *. 100.);
 
   Buffer.contents buf
