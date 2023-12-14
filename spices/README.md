@@ -1,5 +1,8 @@
 # Spices
 
+<img src="https://github.com/leostera/minttea/assets/854222/7a4fc1d6-4be4-4de9-bce8-7d3d6b71e9e6" width="300" />
+
+
 Spices is a small declarative styling library for TUI applications.
 
 ## Getting Started
