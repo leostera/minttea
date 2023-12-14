@@ -10,7 +10,7 @@ Set Height 600
 Type "dune exec --no-print-directory ./main.exe"
 Enter
 Sleep 2s
-Type "jj"
+Type@0.4s "jj"
 Sleep 0.7s
 Type "k"
 Sleep 0.7s
