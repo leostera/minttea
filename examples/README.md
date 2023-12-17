@@ -18,6 +18,12 @@
     <img src="./fullscreen/demo.gif"/>
 </a>
 
+## Spinner
+
+<a href="./spinner/main.ml">
+    <img src="./spinner/demo.gif"/>
+</a>
+
 ## Stopwatch
 
 <a href="./stopwatch/main.ml">
