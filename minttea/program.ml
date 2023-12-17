@@ -8,10 +8,13 @@ let make ~app ~fps = { app; fps }
 exception Exit
 
 let rec loop renderer (app : 'model App.t) (model : 'model) =
-  match receive () with
-  | Timer ref -> handle_input renderer app model (Event.Timer ref)
-  | Io_loop.Input event -> handle_input renderer app model event
-  | _ -> loop renderer app model
+  let event =
+    match receive () with
+    | Timer ref -> Event.Timer ref
+    | Io_loop.Input event -> event
+    | message -> Event.Custom message
+  in
+  handle_input renderer app model event
 
 and handle_input renderer app model event =
   let model, cmd = app.update event model in
