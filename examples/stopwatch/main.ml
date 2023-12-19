@@ -25,14 +25,14 @@ let initial_model () =
 
 let update event model =
   match event with
-  | Event.KeyDown "r" ->
+  | Event.KeyDown (Key "r") ->
       let start_time = Ptime_clock.now () in
       let measured = 0. in
       ({ model with start_time; measured }, Command.Set_timer (ref, 0.01))
-  | Event.KeyDown "s" ->
+  | Event.KeyDown (Key "s") ->
       let stopped = not model.stopped in
       ({ model with stopped }, Command.Set_timer (ref, 0.01))
-  | Event.KeyDown ("q" | "esc" | "ctrl+c") ->
+  | Event.KeyDown (Key "q" | Escape) ->
       ({ model with quit = true }, Command.Quit)
   | Event.Timer _ref ->
       let model =

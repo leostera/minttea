@@ -16,8 +16,8 @@ let initial_model () = { frames = 0; fps = 30; last_frame = Ptime_clock.now () }
 
 let update event model =
   match event with
-  | Event.KeyDown "q" -> (model, Command.Quit)
-  | Event.KeyDown "s" ->
+  | Event.KeyDown (Key "q") -> (model, Command.Quit)
+  | Event.KeyDown (Key "s") ->
       sleep 0.5;
       (model, Command.Noop)
   | Event.Frame ->
