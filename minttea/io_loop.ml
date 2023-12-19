@@ -4,16 +4,16 @@ open Tty
 
 type Message.t += Input of Event.t
 
-let translate = function
-  | " " -> "<space>"
-  | "\027" -> "<esc>"
-  | "\027[A" -> "<up>"
-  | "\027[B" -> "<down>"
-  | "\027[C" -> "<left>"
-  | "\027[D" -> "<right>"
-  | "\127" -> "<backspace>"
-  | "\n" -> "<enter>"
-  | key -> key
+let translate : string -> Event.key = function
+  | " " -> Space
+  | "\027" -> Escape
+  | "\027[A" -> Up
+  | "\027[B" -> Down
+  | "\027[C" -> Left
+  | "\027[D" -> Right
+  | "\127" -> Backspace
+  | "\n" -> Enter
+  | key -> Key key
 
 let rec loop runner =
   yield ();

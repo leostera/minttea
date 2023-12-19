@@ -1,11 +1,18 @@
 open Riot
 
 module Event : sig
-  type t =
-    | KeyDown of string
-    | Timer of unit Ref.t
-    | Frame
-    | Custom of Message.t
+  type key =
+    | Up
+    | Down
+    | Left
+    | Right
+    | Space
+    | Escape
+    | Backspace
+    | Enter
+    | Key of string
+
+  type t = KeyDown of key | Timer of unit Ref.t | Frame | Custom of Message.t
 
   val pp : Format.formatter -> t -> unit
 end

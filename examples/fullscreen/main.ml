@@ -6,7 +6,7 @@ let initial_model () = 3
 
 let update event model =
   match event with
-  | Event.KeyDown ("q" | "esc" | "ctrl+c") -> (model, Command.Quit)
+  | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
   | Event.Timer _ref ->
       let model = model - 1 in
       if model <= 0 then (model, Command.Quit)
