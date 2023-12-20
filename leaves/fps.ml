@@ -5,6 +5,9 @@ let of_float f = 1.0 /. f
 
 type time = Ptime.t
 
-let ready_for_next_frame ~last_frame ~fps now =
-  let delta = Ptime.diff last_frame now |> Ptime.Span.to_float_s |> Float.abs in
-  delta > fps
+let now = Ptime_clock.now
+let is_later = Ptime.is_later
+
+let time_of_next_frame ~last_frame ~fps =
+  Ptime.add_span last_frame (Ptime.Span.of_float_s fps |> Option.get)
+  |> Option.get
