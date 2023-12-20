@@ -12,7 +12,7 @@ let keyword fmt =
 type model = { frames : int; fps : int; last_frame : Ptime.t }
 
 let init _ = Command.Noop
-let initial_model () = { frames = 0; fps = 30; last_frame = Ptime_clock.now () }
+let initial_model = { frames = 0; fps = 30; last_frame = Ptime_clock.now () }
 
 let update event model =
   match event with
@@ -43,5 +43,4 @@ let view model =
   keyword "fps: " ^ fps
   ^ keyword " | counter: %d\n\npress s to slow down" model.frames
 
-let app = Minttea.app ~initial_model ~init ~update ~view ()
-let () = Minttea.start app
+let () = Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model
