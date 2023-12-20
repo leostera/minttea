@@ -1,4 +1,5 @@
 (lang dune 3.11)
+(using mdx 0.4)
 
 (name minttea)
 
@@ -18,8 +19,8 @@
  (description "A longer description")
  (depends
    (ocaml (>= "5.1"))
-   (dune (>= "3.11"))
    (riot (>= "0.0.5"))
+   (mdx (and :with-test (>= "2.3.1")))
    (tty (= :version)))
  (tags (tui "terminal-ui" framework riot)))
 
@@ -29,7 +30,6 @@
  (description "Leaves is a collection of reusable components for writing TUI applications with Mint Tea")
  (depends 
    (ocaml (>= "5.1"))
-   (dune (>= "3.11"))
    (spices (= :version)))
  (tags (tui "terminal-ui" apps components component library)))
 
@@ -39,6 +39,5 @@
  (description "Spices lets you create style definitions for TUIs and provide handy renderers for strings over them")
  (depends 
    (ocaml (>= "5.1"))
-   (dune (>= "3.11"))
    (tty (= :version)))
  (tags (styling styles declarative framework tui "terminal-ui" apps)))

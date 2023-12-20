@@ -12,8 +12,8 @@ tags: [
 homepage: "https://github.com/leostera/minttea"
 bug-reports: "https://github.com/leostera/minttea/issues"
 depends: [
+  "dune" {>= "3.11"}
   "ocaml" {>= "5.1"}
-  "dune" {>= "3.11" & >= "3.11"}
   "tty" {= version}
   "odoc" {with-doc}
 ]
