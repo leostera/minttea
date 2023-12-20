@@ -9,7 +9,7 @@ let help = Spices.(default |> fg dark_gray |> build)
 type model = { altscreen : bool; quitting : bool }
 
 let init _ = Command.Noop
-let initial_model () = { altscreen = false; quitting = false }
+let initial_model = { altscreen = false; quitting = false }
 
 let update event model =
   match event with
@@ -31,4 +31,4 @@ let view model =
     let help = help "  space: switch modes • q: exit\n" in
     Format.sprintf "\n\n You're in %s mode\n\n\n%s" mode help
 
-let () = Minttea.app ~init ~initial_model ~update ~view () |> Minttea.start
+let () = Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model

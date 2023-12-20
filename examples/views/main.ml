@@ -42,7 +42,7 @@ type model = { quit : bool; section : section }
 
 let init _ = Command.Set_timer (ref, 1.)
 
-let initial_model () =
+let initial_model =
   {
     quit = false;
     section =
@@ -160,4 +160,4 @@ Program quits in %d seconds
 |} choices
           screen.timeout help
 
-let () = Minttea.app ~init ~initial_model ~update ~view () |> Minttea.start
+let () = Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model

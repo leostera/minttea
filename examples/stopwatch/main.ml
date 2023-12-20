@@ -15,7 +15,7 @@ type state = {
 let ref = Riot.Ref.make ()
 let init _ = Command.Set_timer (ref, 0.01)
 
-let initial_model () =
+let initial_model =
   {
     start_time = Ptime_clock.now ();
     measured = 0.;
@@ -58,4 +58,4 @@ let view model =
     in
     Format.sprintf "Elapsed: %.3fs\n\n%s" model.measured help
 
-let () = Minttea.app ~init ~initial_model ~update ~view () |> Minttea.start
+let () = Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model

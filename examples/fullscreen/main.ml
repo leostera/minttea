@@ -2,7 +2,7 @@ open Minttea
 
 let ref = Riot.Ref.make ()
 let init _ = Command.Seq [ Set_timer (ref, 1.0); Enter_alt_screen ]
-let initial_model () = 3
+let initial_model = 3
 
 let update event model =
   match event with
@@ -24,4 +24,4 @@ let view model =
   let seconds = time "%d seconds" model in
   Format.sprintf "\n\n     %s. This program will exit in %s...\n\n" hi seconds
 
-let () = Minttea.app ~init ~initial_model ~update ~view () |> Minttea.start
+let () = Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model
