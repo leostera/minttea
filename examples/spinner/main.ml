@@ -3,7 +3,7 @@ open Leaves
 
 let mint fmt = Spices.(default |> fg (color "#77e5b7") |> build) fmt
 
-type s = { spinners : Spinner.t list }
+type s = { spinners : Sprite.t list }
 
 let initial_model =
   let now = Ptime_clock.now () in
@@ -11,18 +11,18 @@ let initial_model =
     spinners =
       Spinner.
         [
-          { spinner = Spinner.line; frame = 0; last_frame = now };
-          { spinner = Spinner.dot; frame = 0; last_frame = now };
-          { spinner = Spinner.mini_dot; frame = 0; last_frame = now };
-          { spinner = Spinner.jump; frame = 0; last_frame = now };
-          { spinner = Spinner.pulse; frame = 0; last_frame = now };
-          { spinner = Spinner.points; frame = 0; last_frame = now };
-          { spinner = Spinner.meter; frame = 0; last_frame = now };
-          { spinner = Spinner.globe; frame = 0; last_frame = now };
-          { spinner = Spinner.moon; frame = 0; last_frame = now };
-          { spinner = Spinner.monkey; frame = 0; last_frame = now };
-          { spinner = Spinner.hamburger; frame = 0; last_frame = now };
-          { spinner = Spinner.ellipsis; frame = 0; last_frame = now };
+          { sprite = line; frame = 0; last_frame = now };
+          { sprite = dot; frame = 0; last_frame = now };
+          { sprite = mini_dot; frame = 0; last_frame = now };
+          { sprite = jump; frame = 0; last_frame = now };
+          { sprite = pulse; frame = 0; last_frame = now };
+          { sprite = points; frame = 0; last_frame = now };
+          { sprite = meter; frame = 0; last_frame = now };
+          { sprite = globe; frame = 0; last_frame = now };
+          { sprite = moon; frame = 0; last_frame = now };
+          { sprite = monkey; frame = 0; last_frame = now };
+          { sprite = hamburger; frame = 0; last_frame = now };
+          { sprite = ellipsis; frame = 0; last_frame = now };
         ];
   }
 
