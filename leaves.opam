@@ -10,8 +10,8 @@ tags: ["tui" "terminal-ui" "apps" "components" "component" "library"]
 homepage: "https://github.com/leostera/minttea"
 bug-reports: "https://github.com/leostera/minttea/issues"
 depends: [
+  "dune" {>= "3.11"}
   "ocaml" {>= "5.1"}
-  "dune" {>= "3.11" & >= "3.11"}
   "spices" {= version}
   "odoc" {with-doc}
 ]
