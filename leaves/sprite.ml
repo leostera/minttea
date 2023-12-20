@@ -17,7 +17,7 @@ let init sprite =
     next_frame = Fps.time_of_next_frame ~last_frame:(Fps.now ()) ~fps:sprite.fps;
   }
 
-type event = Frame | Restart
+type event = Frame
 
 let update e m =
   match e with
@@ -33,13 +33,6 @@ let update e m =
             Fps.time_of_next_frame ~last_frame:m.next_frame ~fps:m.sprite.fps;
         }
       else m
-  | Restart ->
-      {
-        m with
-        frame = 0;
-        next_frame =
-          Fps.time_of_next_frame ~last_frame:(Fps.now ()) ~fps:m.sprite.fps;
-      }
 
 let view s =
   if s.frame > Array.length s.sprite.frames then
