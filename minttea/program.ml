@@ -40,8 +40,7 @@ and handle_cmd cmd renderer =
       let _ = Timer.send_after (self ()) (Timer ref) ~after |> Result.get_ok in
       ()
 
-let init { app; _ } renderer =
-  let initial_model = app.initial_model () in
+let init { app; _ } initial_model renderer =
   let init_cmd = app.init initial_model in
   handle_cmd init_cmd renderer;
 
@@ -49,13 +48,13 @@ let init { app; _ } renderer =
   Renderer.render renderer view;
   loop renderer app initial_model
 
-let run ({ fps; _ } as t) =
+let run ({ fps; _ } as t) initial_model =
   Printexc.record_backtrace true;
   let renderer = spawn (fun () -> Renderer.run ~fps) in
   let runner =
     spawn (fun () ->
         register "Minttea.runner" (self ());
-        init t renderer)
+        init t initial_model renderer)
   in
   let io = spawn (fun () -> Io_loop.run runner) in
   link io;

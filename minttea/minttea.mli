@@ -32,11 +32,10 @@ module App : sig
 end
 
 val app :
-  initial_model:(unit -> 'a) ->
-  init:('a -> Command.t) ->
-  update:(Event.t -> 'a -> 'a * Command.t) ->
-  view:('a -> string) ->
+  init:('model -> Command.t) ->
+  update:(Event.t -> 'model -> 'model * Command.t) ->
+  view:('model -> string) ->
   unit ->
-  'a App.t
+  'model App.t
 
-val start : 'a App.t -> unit
+val start : 'model App.t -> initial_model:'model -> unit
