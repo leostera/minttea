@@ -1,0 +1,41 @@
+open Minttea
+open Leaves
+
+let init _ = Command.Noop
+
+type model = {
+  gray_bar : Progress.t;
+  color_bar : Progress.t;
+  emoji_bar : Progress.t;
+}
+
+let initial_model =
+  let width = 50 in
+  {
+    gray_bar = Progress.make ~width ~color:(`Plain (Spices.color "#3f22a3")) ();
+    color_bar =
+      Progress.make ~width
+        ~color:(`Gradient (Spices.color "#b14fff", Spices.color "#00ffa3"))
+        ();
+    emoji_bar =
+      Progress.make ~full_char:"⭐" ~trail_char:"🚀" ~width:25
+        ~color:(`Plain (Spices.color "#000000"))
+        ();
+  }
+
+let update event m =
+  match event with
+  | Event.KeyDown (Key "q" | Escape) -> (m, Command.Quit)
+  | Event.Frame _now ->
+      let gray_bar = Progress.increment m.gray_bar 0.03 in
+      let color_bar = Progress.increment m.color_bar (Random.float 0.04) in
+      let emoji_bar = Progress.increment m.emoji_bar 0.02 in
+      ({ gray_bar; color_bar; emoji_bar }, Command.Noop)
+  | _ -> (m, Command.Noop)
+
+let view m =
+  Format.sprintf "\n\n%s\n\n%s\n\n%s\n\n" (Progress.view m.gray_bar)
+    (Progress.view m.color_bar)
+    (Progress.view m.emoji_bar)
+
+let () = Minttea.app ~init ~update ~view () |> Minttea.start ~initial_model
