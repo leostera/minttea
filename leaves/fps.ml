@@ -1,13 +1,16 @@
-type t = float
+type t = { frame_rate : float; mutable next_frame : Ptime.t }
 
-let of_int i = 1.0 /. float_of_int i
-let of_float f = 1.0 /. f
+let add_span time rate =
+  Ptime.add_span time (Ptime.Span.of_float_s rate |> Option.get) |> Option.get
 
-type time = Ptime.t
+let make frame_rate =
+  { frame_rate; next_frame = add_span (Ptime_clock.now ()) frame_rate }
 
-let now = Ptime_clock.now
-let is_later = Ptime.is_later
+let of_int i = make (1.0 /. float_of_int i)
+let of_float f = make (1.0 /. f)
 
-let time_of_next_frame ~last_frame ~fps =
-  Ptime.add_span last_frame (Ptime.Span.of_float_s fps |> Option.get)
-  |> Option.get
+let tick ?(now = Ptime_clock.now ()) t =
+  if Ptime.is_later now ~than:t.next_frame then (
+    t.next_frame <- add_span now t.frame_rate;
+    `frame)
+  else `skip
