@@ -14,7 +14,7 @@ bug-reports: "https://github.com/leostera/minttea/issues"
 depends: [
   "dune" {>= "3.11"}
   "ocaml" {>= "5.1"}
-  "tty" {= version}
+  "tty" {>= "0.0.2"}
   "odoc" {with-doc}
 ]
 build: [
