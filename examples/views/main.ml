@@ -1,5 +1,6 @@
 open Riot
 open Minttea
+open Leaves
 
 let ref = Riot.Ref.make ()
 let download_ref = Riot.Ref.make ()
@@ -23,7 +24,12 @@ let select_prev screen =
   let selected = if selected < 0 then option_count - 1 else selected in
   { screen with selected }
 
-type reading_screen = { timeout : int; percent : float; finished : bool }
+type reading_screen = {
+  timeout : int;
+  percent : float;
+  spinner : Sprite.t;
+  finished : bool;
+}
 
 type section =
   | Selection_screen of selection_screen
@@ -34,7 +40,13 @@ exception Invalid_transition
 let transition screen =
   match screen with
   | Selection_screen _select ->
-      ( Reading_screen { timeout = 5; percent = 0.; finished = false },
+      ( Reading_screen
+          {
+            timeout = 5;
+            percent = 0.;
+            finished = false;
+            spinner = Spinner.globe;
+          },
         Command.Set_timer (download_ref, 0.5) )
   | _ -> raise Invalid_transition
 
@@ -70,6 +82,9 @@ let update event model =
         match model.section with
         | Reading_screen screen -> (
             match event with
+            | Event.Frame now ->
+                let spinner = Sprite.update ~now screen.spinner in
+                (Reading_screen { screen with spinner }, Command.Noop)
             | Event.Timer ref when screen.finished && Ref.equal ref finished_ref
               ->
                 let timeout = screen.timeout - 1 in
@@ -119,10 +134,11 @@ let view model =
 
 Okay, cool, then we'll need a library! Yes, an %s.
 
-Done, waiting %d seconds before exiting...
+Done, waiting %d seconds before exiting... %s
 
 |}
           (keyword "actual library") screen.timeout
+          (Sprite.view screen.spinner)
     | Reading_screen screen ->
         Format.sprintf
           {|Reading time?

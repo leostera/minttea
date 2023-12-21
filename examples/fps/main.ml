@@ -20,8 +20,7 @@ let update event model =
   | Event.KeyDown (Key "s") ->
       sleep 0.5;
       (model, Command.Noop)
-  | Event.Frame ->
-      let now = Ptime_clock.now () in
+  | Event.Frame now ->
       let delta = Ptime.diff now model.last_frame in
       let delta = Float.abs (Ptime.Span.to_float_s delta) in
       let model =
