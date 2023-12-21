@@ -7,6 +7,8 @@ let color ?(profile = Tty.Profile.default) raw =
   let color = Tty.Profile.convert profile color in
   color
 
+let gradient = Gradient.make
+
 type style = {
   background : color option;
   blink : bool;

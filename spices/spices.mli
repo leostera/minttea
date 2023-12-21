@@ -1,6 +1,7 @@
 type color
 
 val color : ?profile:Tty.Profile.t -> string -> color
+val gradient : start:color -> finish:color -> steps:int -> color array
 
 type style
 
