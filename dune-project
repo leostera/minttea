@@ -21,7 +21,7 @@
    (ocaml (>= "5.1"))
    (riot (>= "0.0.5"))
    (mdx (and :with-test (>= "2.3.1")))
-   (tty (= :version)))
+   (tty (>= "0.0.2")))
  (tags (tui "terminal-ui" framework riot)))
 
 (package
@@ -39,5 +39,5 @@
  (description "Spices lets you create style definitions for TUIs and provide handy renderers for strings over them")
  (depends 
    (ocaml (>= "5.1"))
-   (tty (= :version)))
+   (tty (>= "0.0.2")))
  (tags (styling styles declarative framework tui "terminal-ui" apps)))
