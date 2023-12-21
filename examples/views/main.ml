@@ -26,7 +26,7 @@ let select_prev screen =
 
 type reading_screen = {
   timeout : int;
-  percent : float;
+  progress : Progress.t;
   spinner : Sprite.t;
   finished : bool;
 }
@@ -43,7 +43,11 @@ let transition screen =
       ( Reading_screen
           {
             timeout = 5;
-            percent = 0.;
+            progress =
+              Progress.make ~width:50
+                ~color:
+                  (`Gradient (Spices.color "#b14fff", Spices.color "#00ffa3"))
+                ();
             finished = false;
             spinner = Spinner.globe;
           },
@@ -94,11 +98,9 @@ let update event model =
                     Command.Set_timer (finished_ref, 1.) )
             | Event.Timer ref
               when (not screen.finished) && Ref.equal ref download_ref ->
-                let percent, finished =
-                  if screen.percent < 1.0 then (screen.percent +. 0.03, false)
-                  else (1.0, true)
-                in
-                ( Reading_screen { screen with percent; finished },
+                let progress = Progress.increment screen.progress 0.03 in
+                let finished = Progress.is_finished progress in
+                ( Reading_screen { screen with progress; finished },
                   if finished then Command.Set_timer (finished_ref, 1.)
                   else Command.Set_timer (download_ref, 0.1) )
             | _ -> (model.section, Command.Noop))
@@ -119,10 +121,6 @@ let update event model =
       in
       ({ model with section }, cmd)
   with Exit -> ({ model with quit = true }, Command.Quit)
-
-let progress_bar_width = 50
-let color_ramp = Leaves.Progress.default_color_ramp progress_bar_width
-let progress_bar = Leaves.Progress.bar ~width:progress_bar_width ~color_ramp
 
 let view model =
   if model.quit then "Bye 👋🏼"
@@ -149,7 +147,7 @@ Okay, cool, then we'll need a library! Yes, an %s.
 
 |}
           (keyword "actual library")
-          (progress_bar screen.percent)
+          (Progress.view screen.progress)
     | Selection_screen screen ->
         let choices =
           List.mapi

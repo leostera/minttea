@@ -18,6 +18,12 @@
     <img src="./fullscreen/demo.gif"/>
 </a>
 
+## Progress
+
+<a href="./progress/main.ml">
+    <img src="./progress/demo.gif"/>
+</a>
+
 ## Spinner
 
 <a href="./spinner/main.ml">
