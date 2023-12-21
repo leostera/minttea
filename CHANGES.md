@@ -35,6 +35,14 @@
 * New `Leaves.Spinner` contains several spinners ready to be used in applications
   (Thanks to @sabine)
 
+* Reworked `Leaves.Progress` to support plain and gradient
+  progress bars with customizable empty/full/trail characters,
+  and to fit right into the make/update/view pattern.
+
+#### Spices
+
+* Implemented support for gradients between two RGB colors
+
 #### Examples
 
 * New Spinners example showcasing several spinners (Thanks to @sabine)
@@ -42,6 +50,10 @@
 * New Emojis game example showcasing a tilemap and moving a player around
 
 * New Basic example for the README tutorial
+
+* New Progress bars examples showcasing plain, gradient, and emoji progress bars
+
+* Updated other examples to use the new progress bars
 
 #### Docs
 
