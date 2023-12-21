@@ -39,5 +39,6 @@
  (description "Spices lets you create style definitions for TUIs and provide handy renderers for strings over them")
  (depends 
    (ocaml (>= "5.1"))
+   (colors (>= "0.0.1"))
    (tty (>= "0.0.2")))
  (tags (styling styles declarative framework tui "terminal-ui" apps)))

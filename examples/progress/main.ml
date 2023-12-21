@@ -27,9 +27,9 @@ let update event m =
   match event with
   | Event.KeyDown (Key "q" | Escape) -> (m, Command.Quit)
   | Event.Frame _now ->
-      let gray_bar = Progress.increment m.gray_bar 0.03 in
-      let color_bar = Progress.increment m.color_bar (Random.float 0.04) in
-      let emoji_bar = Progress.increment m.emoji_bar 0.02 in
+      let gray_bar = Progress.increment m.gray_bar 0.01 in
+      let color_bar = Progress.increment m.color_bar (Random.float 0.01) in
+      let emoji_bar = Progress.increment m.emoji_bar 0.005 in
       ({ gray_bar; color_bar; emoji_bar }, Command.Noop)
   | _ -> (m, Command.Noop)
 
