@@ -9,8 +9,8 @@ let translate : string -> Event.key = function
   | "\027" -> Escape
   | "\027[A" -> Up
   | "\027[B" -> Down
-  | "\027[C" -> Left
-  | "\027[D" -> Right
+  | "\027[C" -> Right
+  | "\027[D" -> Left
   | "\127" -> Backspace
   | "\n" -> Enter
   | key -> Key key

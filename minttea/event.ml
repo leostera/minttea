@@ -23,11 +23,15 @@ let key_to_string key =
   | Enter -> "<enter>"
   | Key k -> k
 
-type t = KeyDown of key | Timer of unit Ref.t | Frame | Custom of Message.t
+type t =
+  | KeyDown of key
+  | Timer of unit Ref.t
+  | Frame of Ptime.t
+  | Custom of Message.t
 
 let pp fmt t =
   match t with
   | KeyDown key -> Format.fprintf fmt "KeyDown(%S)" (key_to_string key)
   | Timer ref -> Format.fprintf fmt "Timer(%a)" Ref.pp ref
-  | Frame -> Format.fprintf fmt "Frame"
+  | Frame delta -> Format.fprintf fmt "Frame(%a)" Ptime.pp delta
   | Custom _msg -> Format.fprintf fmt "Custom"

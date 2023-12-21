@@ -12,7 +12,11 @@ module Event : sig
     | Enter
     | Key of string
 
-  type t = KeyDown of key | Timer of unit Ref.t | Frame | Custom of Message.t
+  type t =
+    | KeyDown of key
+    | Timer of unit Ref.t
+    | Frame of Ptime.t
+    | Custom of Message.t
 
   val pp : Format.formatter -> t -> unit
 end

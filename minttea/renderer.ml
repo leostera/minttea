@@ -41,8 +41,9 @@ let rec loop t =
   | _ -> loop t
 
 and tick t =
+  let now = Ptime_clock.now () in
   if is_empty t || same_as_last_flush t then () else flush t;
-  send_by_name ~name:"Minttea.runner" (Io_loop.Input Event.Frame)
+  send_by_name ~name:"Minttea.runner" (Io_loop.Input (Event.Frame now))
 
 and flush t =
   let new_lines = lines t in
@@ -56,7 +57,7 @@ and flush t =
     done;
 
   (* reset screen if its on alt *)
-  List.iter (fun line -> Printf.printf "%s\r\n%!" line) new_lines;
+  Format.printf "%s\r\n%!" t.buffer;
 
   if t.is_altscreen_active then Terminal.move_cursor new_lines_this_flush 0
   else Terminal.cursor_back t.width;
