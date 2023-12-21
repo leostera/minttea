@@ -1,6 +1,8 @@
 # Changes
 
-## Unrelease
+## Unreleased
+
+#### MintTea
 
 * Add support for custom events – any Riot message sent to a Mint Tea app will
   become an `Event.Custom msg` event, which enables sending data into TUIs from
@@ -17,6 +19,33 @@
   your app with multiple initial states, which makes it ideal for starting apps
   in the middle of other flows, or to test specific scenarios.
 
+* Fix bug where TTY was not restored from RAW mode during normal shutdown.
+
+* Now the `Event.Frame time` event includes the frame time, and all examples
+  are updated to work with it.
+
+#### Leaves
+
+* New `Leaves.Fps` to specify a frame rate and cap updates at that rate (Thanks
+  to @sabine)
+
+* New `Leaves.Sprite` module to create frame-based animations that are ticked
+  at a specific frame-rate (Thanks to @sabine)
+
+* New `Leaves.Spinner` contains several spinners ready to be used in applications
+  (Thanks to @sabine)
+
+#### Examples
+
+* New Spinners example showcasing several spinners (Thanks to @sabine)
+
+* New Emojis game example showcasing a tilemap and moving a player around
+
+* New Basic example for the README tutorial
+
+#### Docs
+
+* New tutorial starting from zero and building a small shopping list app
 
 ## 0.0.1
 
