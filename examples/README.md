@@ -35,3 +35,9 @@
 <a href="./views/main.ml">
     <img src="./views/demo.gif"/>
 </a>
+
+## Emoji Game
+
+<a href="./emoji/main.ml">
+    <img src="./emoji/demo.gif"/>
+</a>
