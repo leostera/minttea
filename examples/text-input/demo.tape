@@ -10,8 +10,7 @@ Set Height 600
 
 Type "dune exec --no-print-directory ./main.exe"
 Enter
-Sleep 2s
-Space
+Sleep 1s
 Type@0.1s "Hello, Eorld!"
 Sleep 0.7s
 Left
