@@ -1,7 +1,7 @@
 type t
 
 val make :
-  value:string ->
+  string ->
   ?text_style:Spices.style ->
   ?cursor_style:Spices.style ->
   ?prompt:string ->
@@ -11,7 +11,7 @@ val make :
    Create a new {Text_input}.
    
    {[
-     let text_input = Text_input.make ~value:"Hello" ()
+     let text_input = Text_input.make "Hello" ()
    ]}
 *)
 
@@ -36,10 +36,11 @@ val view : t -> string
 
 val update : t -> Minttea.Event.t -> t
 (**
-   Given a {Text_input} and a {Minttea.Event.key}, update the {Text_input}.
+   Given a {Text_input} and a {Minttea.Event.t} update the {Text_input} to
+   handle cursor movement, text insertions etc.
 
    {[
-     let text_input = Text_input.update text_input key
+     let text_input = Text_input.update text_input event
    ]}
 *)
 

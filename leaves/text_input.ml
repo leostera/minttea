@@ -22,13 +22,13 @@ open struct
   let black = Spices.color "#000000"
 end
 
-let make ~value ?(text_style = Spices.(default))
+let make value ?(text_style = Spices.(default))
     ?(cursor_style = Spices.(default |> bg white |> fg black)) ?(prompt = "> ")
     () =
   let v, c = match value with "" -> ("", 0) | v -> (value, String.length v) in
   { value = v; cursor = c; text_style; cursor_style; prompt }
 
-let empty () = make ~value:"" ()
+let empty () = make "" ()
 
 let view t =
   let text_style = Spices.(t.text_style |> build) in
