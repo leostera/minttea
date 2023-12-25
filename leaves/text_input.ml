@@ -46,9 +46,6 @@ let view t =
 
   !result
 
-let set_cursor t cursor = { t with cursor }
-let set_value t value = { t with value }
-
 let write t s =
   match t with
   | t when cursor_at_beginning t ->

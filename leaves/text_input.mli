@@ -12,8 +12,7 @@ val make :
   unit ->
   t
 (**
-   Create a new {Text_input}, optionally with a style for the text and the
-   cursor.
+   Create a new {Text_input}. You can optionally provide style for the text and the cursor.
    
    {[
      let text_input = Text_input.make ~value:"Hello" ()
@@ -43,15 +42,17 @@ val update : t -> Minttea.Event.key -> t
 (**
    Given a {Text_input} and a {Minttea.Event.key}, update the {Text_input}.
 
+   This maps the key event to the corresponding actions which are also exposed
+   for manual use.
+
    {[
      let text_input = Text_input.update text_input key
    ]}
 *)
 
 val write : t -> string -> t
+val space : t -> t
 val backspace : t -> t
 val move_cursor : t -> [ `Character_backward | `Character_forward ] -> t
 val character_backward : t -> t
 val character_forward : t -> t
-val set_value : t -> string -> t
-val set_cursor : t -> int -> t
