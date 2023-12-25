@@ -12,7 +12,7 @@ val make :
   unit ->
   t
 (**
-   Create a new {Text_input}. You can optionally provide style for the text and the cursor.
+   Create a new {Text_input}. You can optionally provide styles for the text and/or the cursor.
    
    {[
      let text_input = Text_input.make ~value:"Hello" ()
