@@ -5,20 +5,18 @@ type t = {
   cursor_style : Spices.style;
 }
 
-(* utils *)
+(* Utils *)
 open struct
+  let cursor_at_beginning t = t.cursor = 0
+  let cursor_at_end t = t.cursor = String.length t.value
+
   (** Cursor will be at the start of the right part. *)
   let split s ~at =
     let left = String.sub s 0 at in
     let right = String.sub s at (String.length s - at) in
     (left, right)
 
-  let cursor_at_beginning t = t.cursor = 0
-  let cursor_at_end t = t.cursor = String.length t.value
-end
-
-(* colors *)
-open struct
+  (* Colors *)
   let white = Spices.color "#FFFFFF"
   let black = Spices.color "#000000"
 end
