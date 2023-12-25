@@ -1,4 +1,4 @@
-# Mint Tea 
+# Mint Tea
 
 ## AltScreen Toggling
 
@@ -34,6 +34,12 @@
 
 <a href="./stopwatch/main.ml">
     <img src="./stopwatch/demo.gif"/>
+</a>
+
+## Text input
+
+<a href="./text-input/main.ml">
+    <img src="./text-input/demo.gif"/>
 </a>
 
 ## Views
