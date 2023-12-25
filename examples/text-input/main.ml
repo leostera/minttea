@@ -20,7 +20,7 @@ let update (event : Event.t) model =
 
 let view model =
   if model.quitting then
-    Format.sprintf "\n🐫 You typed: %s\n" @@ Text_input.value model.text
+    Format.sprintf "\n🐫 You typed: %s\n" @@ Text_input.current_text model.text
   else Format.sprintf "\n%s\n" @@ Text_input.view model.text
 
 let app = Minttea.app ~init ~update ~view ()

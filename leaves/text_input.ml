@@ -1,8 +1,9 @@
 type t = {
   value : string;
   cursor : int;
-  text_style : Spices.style;
+  prompt : string;
   cursor_style : Spices.style;
+  text_style : Spices.style;
 }
 
 (* Utils *)
@@ -22,9 +23,10 @@ open struct
 end
 
 let make ~value ?(text_style = Spices.(default))
-    ?(cursor_style = Spices.(default |> bg white |> fg black)) () =
+    ?(cursor_style = Spices.(default |> bg white |> fg black)) ?(prompt = "> ")
+    () =
   let v, c = match value with "" -> ("", 0) | v -> (value, String.length v) in
-  { value = v; cursor = c; text_style; cursor_style }
+  { value = v; cursor = c; text_style; cursor_style; prompt }
 
 let empty () = make ~value:"" ()
 
@@ -42,7 +44,9 @@ let view t =
 
   if cursor_at_end t then result := !result ^ cursor_style "%s" " ";
 
-  !result
+  text_style "%s" t.prompt ^ !result
+
+let current_text t = t.value
 
 let write t s =
   match t with
@@ -78,11 +82,14 @@ let move_cursor t action =
 let character_backward t = move_cursor t `Character_backward
 let character_forward t = move_cursor t `Character_forward
 
-let update t (key : Minttea.Event.key) =
-  match key with
-  | Left -> character_backward t
-  | Right -> character_forward t
-  | Backspace -> backspace t
-  | Key s -> write t s
-  | Space -> space t
-  | Up | Down | Escape | Enter -> t
+let update t (e : Minttea.Event.t) =
+  match e with
+  | KeyDown k -> (
+      match k with
+      | Backspace -> backspace t
+      | Key s -> write t s
+      | Left -> character_backward t
+      | Right -> character_forward t
+      | Space -> space t
+      | Up | Down | Escape | Enter -> t)
+  | _ -> t
