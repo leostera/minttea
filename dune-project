@@ -30,6 +30,7 @@
  (description "Leaves is a collection of reusable components for writing TUI applications with Mint Tea")
  (depends 
    (ocaml (>= "5.1"))
+   (minttea (= :version))
    (spices (= :version)))
  (tags (tui "terminal-ui" apps components component library)))
 
