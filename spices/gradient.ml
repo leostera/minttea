@@ -16,7 +16,7 @@ let make ~start ~finish ~steps : color array =
     let p =
       if steps = 1 then 0.5 else Int.to_float i /. Int.to_float (steps - 1)
     in
-    let `rgb (r,g,b)= Colors.RGB.blend start finish ~mix:p in
-    colors.(i) <- Tty.Color.of_rgb (r,g,b)
+    let (`rgb (r, g, b)) = Colors.RGB.blend start finish ~mix:p in
+    colors.(i) <- Tty.Color.of_rgb (r, g, b)
   done;
   colors

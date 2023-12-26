@@ -42,4 +42,5 @@ val app :
   unit ->
   'model App.t
 
+val run : ?fps:int -> initial_model:'model -> 'model App.t -> unit
 val start : 'model App.t -> initial_model:'model -> unit
