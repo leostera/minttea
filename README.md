@@ -31,7 +31,21 @@ We'll start by defining our `dune` file:
   (libraries minttea))
 ```
 
-Great, now we can create a new `shop.ml` file and start by openig up `Minttea`:
+Then we need to pin the `minttea` package to the github source:
+
+`$ opam pin add minttea git@github.com:leostera/minttea.git --yes`
+
+Opam will do some work installing minttea from the github source.
+
+Next, we'll define our `dune-project` file:
+
+``` dune
+(lang dune 3.6)
+```
+
+Running `$ dune build` will validate the package has been installed correctly.
+
+Great, now we can create a new `shop.ml` file and start by opening up `Minttea`:
 
 ```ocaml
 open Minttea
@@ -185,6 +199,10 @@ by calling `Minttea.app ~init ~update ~view ()` and we can start it by calling
 let app = Minttea.app ~init ~update ~view ()
 let () = Minttea.start app ~initial_model
 ```
+
+We can now run our application:
+
+`$ dune exec ./shop.exe`
 
 And we get our lovely little TUI app:
 
