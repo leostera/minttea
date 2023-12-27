@@ -24,6 +24,9 @@
 * Now the `Event.Frame time` event includes the frame time, and all examples
   are updated to work with it.
 
+* Add new `Hide_cursor` and `Show_cursor` commands, and always restore the
+  cursor to visible on exit
+
 #### Leaves
 
 * New `Leaves.Fps` to specify a frame rate and cap updates at that rate (Thanks
@@ -32,12 +35,15 @@
 * New `Leaves.Sprite` module to create frame-based animations that are ticked
   at a specific frame-rate (Thanks to @sabine)
 
-* New `Leaves.Spinner` contains several spinners ready to be used in applications
-  (Thanks to @sabine)
+* New `Leaves.Spinner` contains several spinners ready to be used in
+  applications (Thanks to @sabine)
 
-* Reworked `Leaves.Progress` to support plain and gradient
-  progress bars with customizable empty/full/trail characters,
-  and to fit right into the make/update/view pattern.
+* New `Leaves.Text_input` field ready to be used in applications (Thanks to
+  @lessp_)
+
+* Reworked `Leaves.Progress` to support plain and gradient progress bars with
+  customizable empty/full/trail characters, and to fit right into the
+  make/update/view pattern.
 
 #### Spices
 

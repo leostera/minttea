@@ -7,6 +7,7 @@ type Message.t +=
   | Exit_alt_screen
   | Tick
   | Shutdown
+  | Set_cursor_visibility of [ `hidden | `visible ]
 
 type t = {
   ticker : Timer.timer;
@@ -16,6 +17,7 @@ type t = {
   mutable last_render : string;
   mutable lines_rendered : int;
   mutable is_altscreen_active : bool;
+  mutable cursor_visibility : [ `hidden | `visible ];
 }
 [@@warning "-69"]
 
@@ -25,12 +27,17 @@ let lines t = t.buffer |> String.split_on_char '\n'
 
 let rec loop t =
   match receive () with
-  | Shutdown -> flush t
+  | Shutdown ->
+      flush t;
+      restore t
   | Tick ->
       tick t;
       loop t
   | Render output ->
       handle_render t output;
+      loop t
+  | Set_cursor_visibility cursor ->
+      handle_set_cursor_visibility cursor t;
       loop t
   | Enter_alt_screen ->
       handle_enter_alt_screen t;
@@ -39,6 +46,9 @@ let rec loop t =
       handle_exit_alt_screen t;
       loop t
   | _ -> loop t
+
+and restore t =
+  if t.cursor_visibility = `hidden then Tty.Escape_seq.show_cursor_seq ()
 
 and tick t =
   let now = Ptime_clock.now () in
@@ -84,6 +94,14 @@ and handle_exit_alt_screen t =
     Terminal.exit_alt_screen ();
     t.last_render <- "")
 
+and handle_set_cursor_visibility cursor t =
+  if t.cursor_visibility = cursor then ()
+  else (
+    (match cursor with
+    | `hidden -> Tty.Escape_seq.hide_cursor_seq ()
+    | `visible -> Tty.Escape_seq.show_cursor_seq ());
+    t.cursor_visibility <- cursor)
+
 let max_fps = 120
 let cap fps = Int.max 1 (Int.min fps max_fps) |> Int.to_float
 let fps_to_float fps = 1. /. cap fps
@@ -102,9 +120,12 @@ let run ~fps =
       last_render = "";
       is_altscreen_active = false;
       lines_rendered = 0;
+      cursor_visibility = `visible;
     }
 
 let render pid output = send pid (Render output)
 let enter_alt_screen pid = send pid Enter_alt_screen
 let exit_alt_screen pid = send pid Exit_alt_screen
 let shutdown pid = send pid Shutdown
+let hide_cursor pid = send pid (Set_cursor_visibility `hidden)
+let show_cursor pid = send pid (Set_cursor_visibility `visible)

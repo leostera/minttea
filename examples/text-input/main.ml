@@ -4,7 +4,7 @@ open Leaves
 type model = { text : Text_input.t; quitting : bool }
 
 let initial_model = { text = Text_input.empty (); quitting = false }
-let init _ = Command.Noop
+let init _ = Command.Hide_cursor
 
 let update (event : Event.t) model =
   let s =
