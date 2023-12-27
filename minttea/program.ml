@@ -33,6 +33,8 @@ and handle_cmd cmd renderer =
   match cmd with
   | Quit -> raise Exit
   | Noop -> ()
+  | Hide_cursor -> Renderer.hide_cursor renderer
+  | Show_cursor -> Renderer.show_cursor renderer
   | Enter_alt_screen -> Renderer.enter_alt_screen renderer
   | Exit_alt_screen -> Renderer.exit_alt_screen renderer
   | Seq cmds -> List.iter (fun cmd -> handle_cmd cmd renderer) cmds
