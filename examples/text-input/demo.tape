@@ -25,6 +25,6 @@ Left
 Sleep 0.1s
 Backspace
 Type@0.s "W"
-Sleep 0.2s
+Sleep 1s
 Enter
-Sleep 3s
+Sleep 2s
