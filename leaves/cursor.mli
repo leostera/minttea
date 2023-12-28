@@ -1,15 +1,10 @@
 type t
 
-val make :
-  ?style:Spices.style ->
-  ?blink:bool ->
-  ?fps:Fps.t ->
-  unit ->
-  t
+val make : ?style:Spices.style -> ?blink:bool -> ?fps:Fps.t -> unit -> t
 (**
    Create a new {Cursor}.
 *)
-            
+
 val update : t -> Minttea.Event.t -> t
 (**
    Update the cursor. Note: This is only needed if `blink` is set to `true`.

@@ -18,12 +18,11 @@ open struct
     (left, right)
 end
 
-let make value
-      ?(text_style = Spices.(default))
-      ?(cursor = Cursor.make ())
-      ?(prompt = "> ")
-    () =
-  let v, pos = match value with "" -> ("", 0) | v -> (value, String.length v) in
+let make value ?(text_style = Spices.(default)) ?(cursor = Cursor.make ())
+    ?(prompt = "> ") () =
+  let v, pos =
+    match value with "" -> ("", 0) | v -> (value, String.length v)
+  in
   { value = v; pos; text_style; cursor; prompt }
 
 let empty () = make "" ()
@@ -34,13 +33,15 @@ let view t =
   let result = ref "" in
   for i = 0 to String.length t.value - 1 do
     let s = String.make 1 @@ t.value.[i] in
-    let txt = if i = t.pos then (Cursor.view t.cursor ~text_style:t.text_style s)
-              else (text_style "%s" s)
-    in result := !result ^ txt
+    let txt =
+      if i = t.pos then Cursor.view t.cursor ~text_style:t.text_style s
+      else text_style "%s" s
+    in
+    result := !result ^ txt
   done;
 
   if cursor_at_end t then
-    result := !result ^ (Cursor.view t.cursor ~text_style:t.text_style " ");
+    result := !result ^ Cursor.view t.cursor ~text_style:t.text_style " ";
 
   text_style "%s" t.prompt ^ !result
 
@@ -76,7 +77,8 @@ let move_cursor t action =
     | `Jump_to_beginning -> 0
     | `Jump_to_end -> String.length t.value
     | _ -> t.pos
-  in { t with pos }
+  in
+  { t with pos }
 
 let character_backward t = move_cursor t `Character_backward
 let character_forward t = move_cursor t `Character_forward
@@ -86,18 +88,19 @@ let jump_to_end t = move_cursor t `Jump_to_end
 let update t (e : Minttea.Event.t) =
   match e with
   | KeyDown k ->
-     {(match k with
-      | Backspace -> backspace t
-      | Key s -> write t s
-      | Left -> character_backward t
-      | Right -> character_forward t
-      | Space -> space t
-      | Up -> jump_to_beginning t
-      | Down -> jump_to_end t
-      | Escape | Enter -> t)
-     with cursor = Cursor.focus t.cursor }
+      {
+        (match k with
+        | Backspace -> backspace t
+        | Key s -> write t s
+        | Left -> character_backward t
+        | Right -> character_forward t
+        | Space -> space t
+        | Up -> jump_to_beginning t
+        | Down -> jump_to_end t
+        | Escape | Enter -> t)
+        with
+        cursor = Cursor.focus t.cursor;
+      }
   | _ -> { t with cursor = Cursor.update t.cursor e }
 
-let set_text value t =
-  { t with value }
-  |> jump_to_end
+let set_text value t = { t with value } |> jump_to_end
