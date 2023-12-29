@@ -3,7 +3,13 @@ open Leaves
 
 type model = { text : Text_input.t; quitting : bool }
 
-let initial_model = { text = Text_input.empty (); quitting = false }
+let mint = Spices.color "#77e5b7"
+let white = Spices.color "#FFFFFF"
+
+let cursor =
+  Cursor.make ~style:Spices.(default |> bg mint |> fg white |> bold true) ()
+
+let initial_model = { text = Text_input.make "" ~cursor (); quitting = false }
 let init _ = Command.Hide_cursor
 
 let update (event : Event.t) model =

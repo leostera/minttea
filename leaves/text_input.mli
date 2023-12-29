@@ -3,7 +3,7 @@ type t
 val make :
   string ->
   ?text_style:Spices.style ->
-  ?cursor_style:Spices.style ->
+  ?cursor:Cursor.t ->
   ?prompt:string ->
   unit ->
   t
@@ -51,4 +51,9 @@ val current_text : t -> string
    {[
      let text = Text_input.current_text text_input
    ]}
+*)
+
+val set_text : string -> t -> t
+(**
+   Set the current text in the {Text_input}.
 *)
