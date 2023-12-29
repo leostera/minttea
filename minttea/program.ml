@@ -39,6 +39,8 @@ and handle_cmd cmd renderer =
   | Exit_alt_screen -> Renderer.exit_alt_screen renderer
   | Seq cmds -> List.iter (fun cmd -> handle_cmd cmd renderer) cmds
   | Set_timer (ref, after) ->
+      (* NOTE(@leostera): Riot works in microseconds and 1 second = 1_000_000 micros *)
+      let after = after *. 1_000_000.0 |> Int64.of_float in
       let _ = Timer.send_after (self ()) (Timer ref) ~after |> Result.get_ok in
       ()
 
