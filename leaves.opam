@@ -13,6 +13,7 @@ depends: [
   "dune" {>= "3.11"}
   "ocaml" {>= "5.1"}
   "minttea" {= version}
+  "mdx" {with-test & >= "2.3.1"}
   "spices" {= version}
   "odoc" {with-doc}
 ]

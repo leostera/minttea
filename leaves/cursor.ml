@@ -11,8 +11,10 @@ type t = {
   fps : Fps.t;
 }
 
-let make ?(style = Spices.(default |> reverse true)) ?(blink = true)
-    ?(fps = Fps.of_float 2.5) () =
+let default_style = Spices.(default |> reverse true)
+let default_fps = Fps.of_float 2.5
+
+let make ?(style = default_style) ?(blink = true) ?(fps = default_fps) () =
   { focus = true; blink; fps; show = true; style }
 
 let update t (e : Minttea.Event.t) =
@@ -24,7 +26,7 @@ let update t (e : Minttea.Event.t) =
       else t
   | _ -> t
 
-let view t ?(text_style = Spices.(t.style |> reverse false)) str =
+let view t ~text_style str =
   let style = Spices.(t.style |> build) in
   let text_style = Spices.(text_style |> build) in
   if t.show && t.focus then style "%s" str else text_style "%s" str

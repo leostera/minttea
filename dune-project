@@ -31,6 +31,7 @@
  (depends 
    (ocaml (>= "5.1"))
    (minttea (= :version))
+   (mdx (and :with-test (>= "2.3.1")))
    (spices (= :version)))
  (tags (tui "terminal-ui" apps components component library)))
 
@@ -41,5 +42,6 @@
  (depends 
    (ocaml (>= "5.1"))
    (colors (>= "0.0.1"))
+   (mdx (and :with-test (>= "2.3.1")))
    (tty (>= "0.0.2")))
  (tags (styling styles declarative framework tui "terminal-ui" apps)))

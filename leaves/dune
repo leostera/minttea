@@ -1,3 +1,6 @@
+(mdx
+ (libraries leaves))
+
 (library
  (public_name leaves)
  (name leaves)

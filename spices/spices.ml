@@ -134,7 +134,11 @@ let do_render t str =
 
   !str
 
-let build t fmt =
+type 'a style_fun =
+  ('a, Format.formatter, unit, unit, unit, string) format6 -> 'a
+
+let build : type a. style -> a style_fun =
+ fun t fmt ->
   let buf = Buffer.create 1024 in
   Format.kfprintf
     (fun _ -> do_render t (Buffer.contents buf))

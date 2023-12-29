@@ -25,7 +25,7 @@ For this tutorial, we're making a shopping list.
 
 We'll start by defining our `dune-project` file:
 
-``` dune
+```dune
 (lang dune 3.12)
 ```
 
@@ -40,7 +40,7 @@ And a `dune` file for our executable:
 Then we need to pin the `minttea` package to the github source:
 
 ```
-$ opam pin add minttea git@github.com:leostera/minttea.git --yes
+$ opam install minttea
 ```
 
 Opam will do some work installing minttea from the github source.

@@ -18,8 +18,12 @@ open struct
     (left, right)
 end
 
-let make value ?(text_style = Spices.(default)) ?(cursor = Cursor.make ())
-    ?(prompt = "> ") () =
+let default_prompt = "> "
+let default_text_style = Spices.default
+let default_cursor () = Cursor.make ()
+
+let make value ?(text_style = default_text_style) ?(cursor = default_cursor ())
+    ?(prompt = default_prompt) () =
   let v, pos =
     match value with "" -> ("", 0) | v -> (value, String.length v)
   in

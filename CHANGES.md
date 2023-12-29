@@ -1,6 +1,6 @@
 # Changes
 
-## Unreleased
+## 0.0.2
 
 #### MintTea
 
@@ -41,6 +41,9 @@
 * New `Leaves.Text_input` field ready to be used in applications (Thanks to
   @lessp_)
 
+* New `Leaves.Cursor` that can be used to highlight where the cursor is in a
+  given text (Thanks to @nguermond)
+
 * Reworked `Leaves.Progress` to support plain and gradient progress bars with
   customizable empty/full/trail characters, and to fit right into the
   make/update/view pattern.
@@ -59,11 +62,14 @@
 
 * New Progress bars examples showcasing plain, gradient, and emoji progress bars
 
+* New Text input field example (Thanks to @lessp_)
+
 * Updated other examples to use the new progress bars
 
 #### Docs
 
 * New tutorial starting from zero and building a small shopping list app
+  (Thanks to @metame)
 
 ## 0.0.1
 

@@ -27,4 +27,8 @@ val reverse : bool -> style -> style
 val strikethrough : bool -> style -> style
 val underline : bool -> style -> style
 val width : int option -> style -> style
-val build : style -> ('a, Format.formatter, unit, string) format4 -> 'a
+
+type 'a style_fun =
+  ('a, Format.formatter, unit, unit, unit, string) format6 -> 'a
+
+val build : 'a. style -> 'a style_fun
