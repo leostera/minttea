@@ -61,13 +61,13 @@ and flush t =
 
   (* clean last rendered lines *)
   if t.lines_rendered > 0 then
-    for _i = 1 to t.lines_rendered do
+    for _i = 1 to t.lines_rendered - 1 do
+      Terminal.clear_line ();
       Terminal.cursor_up 1;
-      Terminal.clear_line ()
     done;
 
   (* reset screen if its on alt *)
-  Format.printf "%s\r\n%!" t.buffer;
+  Format.printf "%s%!" t.buffer;
 
   if t.is_altscreen_active then Terminal.move_cursor new_lines_this_flush 0
   else Terminal.cursor_back t.width;
