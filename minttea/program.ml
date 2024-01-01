@@ -61,5 +61,4 @@ let run ({ fps; _ } as t) initial_model =
         init t initial_model renderer)
   in
   let io = spawn (fun () -> Io_loop.run runner) in
-  wait_pids [ runner; io ];
-  shutdown ()
+  wait_pids [ runner; io ]
