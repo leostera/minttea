@@ -15,4 +15,5 @@ val make :
 val is_finished : t -> bool
 val reset : t -> t
 val increment : t -> float -> t
+val set_progress : t -> float -> t
 val view : t -> string

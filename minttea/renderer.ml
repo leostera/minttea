@@ -104,7 +104,7 @@ and handle_set_cursor_visibility cursor t =
 
 let max_fps = 120
 let cap fps = Int.max 1 (Int.min fps max_fps) |> Int.to_float
-let fps_to_float fps = (1. /. cap fps) *. 1_000. |> Int64.of_float
+let fps_to_float fps = 1. /. cap fps *. 1_000. |> Int64.of_float
 
 let run ~fps =
   let ticker =
