@@ -107,6 +107,7 @@ let cap fps = Int.max 1 (Int.min fps max_fps) |> Int.to_float
 let fps_to_float fps = 1. /. cap fps *. 1_000. |> Int64.of_float
 
 let run ~fps =
+  let _ = Process.await_name "Minttea.runner" in
   let ticker =
     Riot.Timer.send_interval ~every:(fps_to_float fps) (self ()) Tick
     |> Result.get_ok
