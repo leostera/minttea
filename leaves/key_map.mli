@@ -1,18 +1,26 @@
 type help = { key : string; desc : string }
-type binding = { keys : Minttea.Event.key list; help : help; disabled : bool }
 
-module type Key_map_with_defaults = sig
-  type t
+type binding = {
+  keys : Minttea.Event.key list;
+  help : help option;
+  disabled : bool;
+}
 
-  val defaults : (t * binding) list
-end
+type 'a t = ('a * binding) list
 
-module Make : functor (K : Key_map_with_defaults) -> sig
-  type t = (K.t * binding) list
+val on :
+  ?help:help ->
+  ?disabled:bool ->
+  Minttea.Event.key list ->
+  'a ->
+  'a * binding
 
-  val make : (K.t * binding) list -> t
-  val find_match : Minttea.Event.key -> t -> K.t option
-  val update_binding : K.t -> (binding option -> binding) -> t -> t
-  val to_list : t -> (K.t * binding) list
-end
+val find_match :
+  ?custom_key_map:'a t ->
+  Minttea.Event.key ->
+  'a t ->
+  'a option
+
+val make : ('a * binding) list -> 'a t
+val to_list : 'a t -> ('a * binding) list
 

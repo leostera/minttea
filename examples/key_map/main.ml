@@ -1,49 +1,38 @@
 open Leaves
 open Minttea
 
-module Msg = struct
-  type t = CursorUp | CursorDown | CursorLeft
+type msg = CursorUp | CursorDown | CursorLeft
 
-  let defaults : (t * Key_map.binding) list =
-    [
-      ( CursorUp,
-        {
-          keys = [ Minttea.Event.Up; Minttea.Event.Key "k" ];
-          help = { key = "up"; desc = "↑/k" };
-          disabled = false;
-        } );
-      ( CursorDown,
-        {
-          keys = [ Minttea.Event.Down; Minttea.Event.Key "j" ];
-          help = { key = "down"; desc = "↓/j" };
-          disabled = false;
-        } );
-      ( CursorLeft,
-        {
-          keys = [ Minttea.Event.Left; Minttea.Event.Key "h" ];
-          help = { key = "left"; desc = "←/h" };
-          disabled = true;
-        } );
-    ]
-end
+let defaults =
+  let open Key_map in
+  make [
+    on
+      ~help:{ key = "up"; desc = "↑/k" }
+      [ Minttea.Event.Up; Minttea.Event.Key "k" ]
+      CursorUp;
+    on
+      ~help:{ key = "down"; desc = "↓/j" }
+      [ Minttea.Event.Down; Minttea.Event.Key "j" ]
+      CursorDown;
+    on ~disabled:true
+      ~help:{ key = "left"; desc = "←/h" }
+      [ Minttea.Event.Left; Minttea.Event.Key "h" ]
+      CursorLeft;
+  ]
 
-module Test_key_map = Key_map.Make (Msg)
-
-let m =
-  Test_key_map.make
-    [
-      ( CursorUp,
-        {
-          keys = [ Minttea.Event.Up; Minttea.Event.Key "k" ];
-          help = { key = "up"; desc = "↑/k" };
-          disabled = false;
-        } );
-    ]
+let custom_key_map =
+  let open Key_map in
+  [
+    on
+      ~help:{ key = "up"; desc = "↑/k" }
+      [ Minttea.Event.Up; Minttea.Event.Key "k"; Minttea.Event.Key "u" ]
+      CursorUp;
+  ]
 
 let () =
   List.iter
     (fun k ->
-      match Test_key_map.find_match k m with
+      match Key_map.find_match ~custom_key_map k defaults with
       | Some CursorUp -> print_endline "up"
       | Some CursorDown -> print_endline "down"
       | Some CursorLeft -> print_endline "left"
@@ -51,6 +40,7 @@ let () =
     [
       Event.Up;
       Event.Key "k";
+      Event.Key "u";
       Event.Down;
       Event.Key "j";
       Event.Left;

@@ -1,37 +1,32 @@
 type help = { key : string; desc : string }
-type binding = { keys : Minttea.Event.key list; help : help; disabled : bool }
 
-module type Key_map_with_defaults = sig
-  type t
+type binding = {
+  keys : Minttea.Event.key list;
+  help : help option;
+  disabled : bool;
+}
 
-  val defaults : (t * binding) list
-end
+type 'a t = ('a * binding) list
 
-module Make (K : Key_map_with_defaults) = struct
-  type t = (K.t * binding) list
+let on ?help ?(disabled = false) keys msg = (msg, { keys; help; disabled })
 
-  let make bindings =
-    let f (default_msg, default_binding) bindings =
-      let is_bound = List.mem_assoc default_msg bindings in
+let find_match ?(custom_key_map : 'a t option) key (default_key_map : 'a t) =
+  let key_map =
+    match custom_key_map with
+    | Some k_map ->
+        List.fold_left
+          (fun acc (k, b) ->
+            if List.mem_assoc k acc then acc else List.cons (k, b) acc)
+          k_map default_key_map
+    | None -> default_key_map
+  in
 
-      if is_bound then bindings
-      else List.cons (default_msg, default_binding) bindings
-    in
+  let f (_, (binding : binding)) =
+    if binding.disabled then false
+    else List.exists (fun k -> k == key) binding.keys
+  in
+  List.find_opt f key_map |> Option.map (fun (msg, _) -> msg)
 
-    List.fold_right f K.defaults bindings
-
-  let find_match key key_map =
-    let f (_, (binding : binding)) =
-      if binding.disabled then false
-      else List.exists (fun k -> k == key) binding.keys
-    in
-    List.find_opt f key_map |> Option.map (fun (msg, _) -> msg)
-
-  let update_binding msg f bindings =
-    let updated_binding = f (List.assoc_opt msg bindings) in
-
-    List.remove_assoc msg bindings |> List.cons (msg, updated_binding)
-
-  (* INFO: This is just incase the underlying type changes in refactorings *)
-  let to_list bindings = bindings
-end
+(* INFO: This is just for future proofing, in case the underlying type changes *)
+let make (key_map : ('a * binding) list) = key_map
+let to_list (key_map : 'a t) = key_map
