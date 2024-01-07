@@ -12,8 +12,6 @@ let run ?(fps = 60) ~initial_model app =
 
 let start app ~initial_model =
   let module App = struct
-    let name = "my_app"
-
     let start () =
       Logger.set_log_level None;
       let pid =
