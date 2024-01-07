@@ -30,7 +30,7 @@ module Command : sig
     | Exit_alt_screen
     | Enter_alt_screen
     | Seq of t list
-    | Set_timer of unit Riot.Ref.t * float
+    | Set_timer of unit Riot.Symbol.t * float
 end
 
 module App : sig

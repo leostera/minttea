@@ -2,9 +2,12 @@ open Riot
 open Minttea
 open Leaves
 
-let ref = Riot.Ref.make ()
-let download_ref = Riot.Ref.make ()
-let finished_ref = Riot.Ref.make ()
+(**a [Riot.Symbol] is unique reference across the entire execution of your program.
+      No two calls to [Riot.Symbol.make ()] will ever return the same ['a Riot.Symbol.t]. *)
+let ref = Riot.Symbol.make ()
+let download_ref = Riot.Symbol.make ()
+let finished_ref = Riot.Symbol.make ()
+
 let dot = Spices.(default |> fg (color "236") |> build) " • "
 let subtle fmt = Spices.(default |> fg (color "241") |> build) fmt
 let keyword fmt = Spices.(default |> fg (color "211") |> build) fmt
