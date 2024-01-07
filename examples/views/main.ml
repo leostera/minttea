@@ -2,8 +2,8 @@ open Riot
 open Minttea
 open Leaves
 
-(**a [Riot.Symbol] is unique reference across the entire execution of your program.
-      No two calls to [Riot.Symbol.make ()] will ever return the same ['a Riot.Symbol.t]. *)
+(** [Riot.Symbol] is unique reference across the entire execution of your program.
+    No two calls to [Riot.Symbol.make ()] will ever return the same ['a Riot.Symbol.t]. *)
 let ref = Riot.Symbol.make ()
 let download_ref = Riot.Symbol.make ()
 let finished_ref = Riot.Symbol.make ()
