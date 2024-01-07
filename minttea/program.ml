@@ -54,9 +54,11 @@ let init { app; _ } initial_model renderer =
 
 let run ({ fps; _ } as t) initial_model =
   Printexc.record_backtrace true;
-  let renderer = spawn (fun () -> 
-    process_flag (Priority High);
-    Renderer.run ~fps) in
+  let renderer =
+    spawn (fun () ->
+        process_flag (Priority High);
+        Renderer.run ~fps)
+  in
   let runner =
     spawn (fun () ->
         register "Minttea.runner" (self ());

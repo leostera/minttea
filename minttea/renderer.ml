@@ -63,7 +63,7 @@ and flush t =
   if t.lines_rendered > 0 then
     for _i = 1 to t.lines_rendered - 1 do
       Terminal.clear_line ();
-      Terminal.cursor_up 1;
+      Terminal.cursor_up 1
     done;
 
   (* reset screen if its on alt *)
