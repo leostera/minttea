@@ -12,8 +12,8 @@ type state = {
   stopped : bool;
 }
 
-(**a [Riot.Symbol] is unique reference across the entire execution of your program.
-      No two calls to [Riot.Symbol.make ()] will ever return the same ['a Riot.Symbol.t]. *)
+(** [Riot.Symbol] is unique reference across the entire execution of your program.
+    No two calls to [Riot.Symbol.make ()] will ever return the same ['a Riot.Symbol.t]. *)
 let ref = Riot.Symbol.make ()
 let init _ = Command.Set_timer (ref, 0.01)
 
