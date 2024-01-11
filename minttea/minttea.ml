@@ -12,11 +12,13 @@ let run ?(fps = 60) ~initial_model app =
 
 let start app ~initial_model =
   let module App = struct
-    let name = "my_app"
-
     let start () =
       Logger.set_log_level None;
-      let pid = spawn_link (fun () -> run app ~initial_model) in
+      let pid =
+        spawn_link (fun () ->
+            run app ~initial_model;
+            shutdown ())
+      in
       Ok pid
   end in
   Riot.start ~apps:[ (module Riot.Logger); (module App) ] ()

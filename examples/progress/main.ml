@@ -12,7 +12,7 @@ type model = {
 let initial_model =
   let width = 50 in
   {
-    gray_bar = Progress.make ~width ~color:(`Plain (Spices.color "#3f22a3")) ();
+    gray_bar = Progress.make ~width ~color:(`Plain (Spices.color "#3fa2a3")) ();
     color_bar =
       Progress.make ~width
         ~color:(`Gradient (Spices.color "#b14fff", Spices.color "#00ffa3"))
@@ -27,9 +27,9 @@ let update event m =
   match event with
   | Event.KeyDown (Key "q" | Escape) -> (m, Command.Quit)
   | Event.Frame _now ->
-      let gray_bar = Progress.increment m.gray_bar 0.01 in
-      let color_bar = Progress.increment m.color_bar (Random.float 0.01) in
-      let emoji_bar = Progress.increment m.emoji_bar 0.005 in
+      let gray_bar = Progress.increment m.gray_bar 0.001 in
+      let color_bar = Progress.increment m.color_bar (Random.float 0.0001) in
+      let emoji_bar = Progress.increment m.emoji_bar 0.00005 in
       ({ gray_bar; color_bar; emoji_bar }, Command.Noop)
   | _ -> (m, Command.Noop)
 

@@ -25,7 +25,7 @@ let initial_model =
         ];
   }
 
-let init _ = Command.Noop
+let init _ = Command.Hide_cursor
 
 let update event model =
   match event with

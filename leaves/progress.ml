@@ -37,6 +37,11 @@ let reset t =
   t.finished <- false;
   t
 
+let set_progress t progress =
+  t.percent <- Float.min 1.0 progress;
+  if t.percent = 1.0 then t.finished <- true;
+  t
+
 let increment t amount =
   if t.percent +. amount < 1.0 then t.percent <- t.percent +. amount
   else (

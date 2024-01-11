@@ -22,6 +22,7 @@ and handle_input renderer app model event =
   match handle_cmd cmd renderer with
   | exception Exit ->
       Renderer.render renderer view;
+      Renderer.show_cursor renderer;
       Renderer.exit_alt_screen renderer;
       Renderer.shutdown renderer;
       wait_pids [ renderer ]
@@ -54,12 +55,16 @@ let init { app; _ } initial_model renderer =
 
 let run ({ fps; _ } as t) initial_model =
   Printexc.record_backtrace true;
-  let renderer = spawn (fun () -> Renderer.run ~fps) in
+  let renderer =
+    spawn (fun () ->
+        process_flag (Priority High);
+        let runner = Process.await_name "Minttea.runner" in
+        Renderer.run ~fps ~runner)
+  in
   let runner =
     spawn (fun () ->
         register "Minttea.runner" (self ());
         init t initial_model renderer)
   in
   let io = spawn (fun () -> Io_loop.run runner) in
-  wait_pids [ runner; io ];
-  shutdown ()
+  wait_pids [ runner; io ]

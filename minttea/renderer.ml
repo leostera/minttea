@@ -10,6 +10,7 @@ type Message.t +=
   | Set_cursor_visibility of [ `hidden | `visible ]
 
 type t = {
+  runner : Pid.t;
   ticker : Timer.timer;
   width : int;
   height : int;
@@ -53,7 +54,7 @@ and restore t =
 and tick t =
   let now = Ptime_clock.now () in
   if is_empty t || same_as_last_flush t then () else flush t;
-  send_by_name ~name:"Minttea.runner" (Io_loop.Input (Event.Frame now))
+  send t.runner (Io_loop.Input (Event.Frame now))
 
 and flush t =
   let new_lines = lines t in
@@ -63,7 +64,7 @@ and flush t =
   if t.lines_rendered > 0 then
     for _i = 1 to t.lines_rendered - 1 do
       Terminal.clear_line ();
-      Terminal.cursor_up 1;
+      Terminal.cursor_up 1
     done;
 
   (* reset screen if its on alt *)
@@ -77,7 +78,7 @@ and flush t =
   t.lines_rendered <- new_lines_this_flush;
   t.buffer <- ""
 
-and handle_render t output = t.buffer <- output
+and handle_render t output = t.buffer <- output ^ "\n"
 
 and handle_enter_alt_screen t =
   if t.is_altscreen_active then ()
@@ -104,15 +105,16 @@ and handle_set_cursor_visibility cursor t =
 
 let max_fps = 120
 let cap fps = Int.max 1 (Int.min fps max_fps) |> Int.to_float
-let fps_to_float fps = (1. /. cap fps) *. 1_000. |> Int64.of_float
+let fps_to_float fps = 1. /. cap fps *. 1_000. |> Int64.of_float
 
-let run ~fps =
+let run ~fps ~runner =
   let ticker =
     Riot.Timer.send_interval ~every:(fps_to_float fps) (self ()) Tick
     |> Result.get_ok
   in
   loop
     {
+      runner;
       ticker;
       buffer = "";
       width = 0;
