@@ -22,6 +22,7 @@ and handle_input renderer app model event =
   match handle_cmd cmd renderer with
   | exception Exit ->
       Renderer.render renderer view;
+      Renderer.show_cursor renderer;
       Renderer.exit_alt_screen renderer;
       Renderer.shutdown renderer;
       wait_pids [ renderer ]
@@ -57,7 +58,8 @@ let run ({ fps; _ } as t) initial_model =
   let renderer =
     spawn (fun () ->
         process_flag (Priority High);
-        Renderer.run ~fps)
+        let runner = Process.await_name "Minttea.runner" in
+        Renderer.run ~fps ~runner)
   in
   let runner =
     spawn (fun () ->
