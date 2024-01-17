@@ -51,14 +51,11 @@ let update event model =
 
 let view model =
   let open Spices in
-  (* padding and margin setup using the Spices module *)
+  (* padding and margin using the Spices module *)
   let checkbox_padded_style = default |> padding_left 1 |> padding_right 1 in
-  let list_margin_style =
-    default |> margin_top 1 |> margin_bottom 1 |> margin_left 1
-    |> margin_right 1
-  in
+  let list_margin_style = default |> margin_top 2 |> margin_bottom 2 in
 
-  (* functions to apply the styling *)
+  (* apply the padding and margin styling *)
   let apply_checkbox_style = build checkbox_padded_style in
   let apply_list_style = build list_margin_style in
 
