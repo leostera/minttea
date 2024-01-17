@@ -6,14 +6,16 @@ type model = {
   cursor : int;
 }
 
-let initial_model = {
-  cursor = 0;
-  choices = [
-    ("Buy empanadas 🥟", `unselected);
-    ("Buy carrots 🥕", `unselected);
-    ("Buy cupcakes 🧁", `unselected);
-  ];
-}
+let initial_model =
+  {
+    cursor = 0;
+    choices =
+      [
+        ("Buy empanadas 🥟", `unselected);
+        ("Buy carrots 🥕", `unselected);
+        ("Buy cupcakes 🧁", `unselected);
+      ];
+  }
 
 let init _model = Command.Noop
 
@@ -22,48 +24,62 @@ let update event model =
   match event with
   | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
   | Event.KeyDown (Up | Key "k") ->
-      let cursor = if model.cursor = 0 then List.length model.choices - 1 else model.cursor - 1 in
+      let cursor =
+        if model.cursor = 0 then List.length model.choices - 1
+        else model.cursor - 1
+      in
       ({ model with cursor }, Command.Noop)
   | Event.KeyDown (Down | Key "j") ->
-      let cursor = if model.cursor = List.length model.choices - 1 then 0 else model.cursor + 1 in
+      let cursor =
+        if model.cursor = List.length model.choices - 1 then 0
+        else model.cursor + 1
+      in
       ({ model with cursor }, Command.Noop)
   | Event.KeyDown (Enter | Space) ->
-      let toggle status = match status with `selected -> `unselected | `unselected -> `selected in
-      let choices = List.mapi (fun idx (name, status) ->
-        let status = if idx = model.cursor then toggle status else status in
-        (name, status)) model.choices in
+      let toggle status =
+        match status with `selected -> `unselected | `unselected -> `selected
+      in
+      let choices =
+        List.mapi
+          (fun idx (name, status) ->
+            let status = if idx = model.cursor then toggle status else status in
+            (name, status))
+          model.choices
+      in
       ({ model with choices }, Command.Noop)
   | _ -> (model, Command.Noop)
 
-
-(* View function with padding applied using the Spices module *)
 let view model =
   let open Spices in
-  let padding = default
-                     |> padding_top 1
-                     |> padding_left 1
-                     |> padding_right 1
-                     |> padding_bottom 1
+  (* padding and margin setup using the Spices module *)
+  let checkbox_padded_style = default |> padding_left 2 |> padding_right 2 in
+  let list_margin_style =
+    default |> margin_top 3 |> margin_bottom 3 |> margin_left 3
+    |> margin_right 3
   in
-  let style = build padding in
+
+  (* functions to apply the styling *)
+  let apply_checkbox_style = build checkbox_padded_style in
+  let apply_list_style = build list_margin_style in
 
   let options =
     model.choices
     |> List.mapi (fun idx (name, checked) ->
            let cursor = if model.cursor = idx then ">" else " " in
-           let checked = if checked = `selected then "x" else " " in
-           style ("%s [%s] %s") cursor checked name)
+           let checked_symbol = if checked = `selected then "x" else " " in
+           let checkbox = apply_checkbox_style "[%s]" checked_symbol in
+           Format.sprintf "%s %s %s" cursor checkbox name)
     |> String.concat "\n"
   in
-  Format.sprintf
+  apply_list_style
     {|
 What should we buy at the market?
 
 %s
 
 Press q to quit.
-
-  |} options
+    |}
+    options
 
 (* Application start *)
 let app = Minttea.app ~init ~update ~view ()

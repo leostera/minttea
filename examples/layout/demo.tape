@@ -13,6 +13,15 @@ Enter
 Sleep 2.5s
 Space
 Sleep 1.5s
+Down
+Sleep 1.5s
+Space
+Down
+Sleep 1.5s
+Space
+Sleep 1.5s
+Up
+Sleep 1.5s
 Space
 Sleep 1.5s
 Type "q"
