@@ -16,6 +16,7 @@ Sleep 1.5s
 Down
 Sleep 1.5s
 Space
+Sleep 1.5s
 Down
 Sleep 1.5s
 Space
