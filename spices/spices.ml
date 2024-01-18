@@ -1,6 +1,7 @@
 [@@@warning "-69"]
 
 type color = Tty.Color.t
+
 let color ?(profile = Tty.Profile.default) raw =
   let color = Tty.Color.make raw in
   let color = Tty.Profile.convert profile color in
