@@ -2,7 +2,7 @@
 <img src="https://github.com/dmmulroy/minttea/assets/2755722/e9e96e73-1f7f-4b8f-8bb1-445308dfe8bd" alt="Mint Tea Logo" width="400"/>
 
 A fun, functional, and stateful way to build terminal apps in OCaml heavily
-inspired by [BubbleTea][bubbletea]. MintTea is built on Riot and uses The Elm
+inspired by [BubbleTea][bubbletea]. Mint Tea is built on Riot and uses The Elm
 Architecture.
 
 [bubbletea]: https://github.com/charmbracelet/bubbletea
@@ -43,7 +43,7 @@ Then we need to pin the `minttea` package to the github source:
 $ opam install minttea
 ```
 
-Opam will do some work installing minttea from the github source.
+Opam will do some work installing `minttea` from the github source.
 
 We can run `dune build` to validate the package has been installed correctly.
 
@@ -54,13 +54,13 @@ open Minttea
 ```
 
 Mint Tea programs are composed of a **model** that describes the application
-state, and tree simple functions:
+state, and three simple functions:
 
 * `init`, a function that returns the initial commands for the application to
   run
 * `update` a function that handles incoming events and updates the model
   accordingly
-* `view`, a function that renders the UI based no the data in the model
+* `view`, a function that renders the UI based on the data in the model
 
 ### The Model
 
@@ -154,8 +154,8 @@ let update event model =
   | _ -> (model, Command.Noop)
 ```
 
-You  may have noticed the special command `Quit` up there. This command tells
-Mint Tea that its time for the application to shutdown.
+You may have noticed the special command `Quit` up there. This command tells
+Mint Tea that it's time for the application to shutdown.
 
 ### The View Method
 
