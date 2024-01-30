@@ -81,7 +81,18 @@ let underline x t = { t with underline = x }
 let width x t = { t with width = x }
 
 let do_render t str =
-  (* build formatting sequenc *)
+  (* Pre-process padding *)
+  let apply_padding str =
+    let pad_left = String.make t.padding_left ' ' in
+    let pad_right = String.make t.padding_right ' ' in
+    let pad_top = String.init t.padding_top (fun _ -> '\n') in
+    let pad_bottom = String.init t.padding_bottom (fun _ -> '\n') in
+    pad_top ^ pad_left ^ str ^ pad_right ^ pad_bottom
+  in
+
+  let str = apply_padding str in
+
+  (* build formatting sequence *)
   let format =
     Formatter.
       [
@@ -118,12 +129,12 @@ let do_render t str =
     Buffer.contents buf
   in
 
-  (* handle padding *)
+  (* handle margin *)
   let str = ref str in
-  if t.padding_left > 0 then str := String.make t.padding_left ' ' ^ !str;
-  if t.padding_right > 0 then str := !str ^ String.make t.padding_right ' ';
-  if t.padding_top > 0 then str := String.make t.padding_top '\n' ^ !str;
-  if t.padding_bottom > 0 then str := !str ^ String.make t.padding_bottom '\n';
+  if t.margin_left > 0 then str := String.make t.margin_left ' ' ^ !str;
+  if t.margin_right > 0 then str := !str ^ String.make t.margin_right ' ';
+  if t.margin_top > 0 then str := String.make t.margin_top '\n' ^ !str;
+  if t.margin_bottom > 0 then str := !str ^ String.make t.margin_bottom '\n';
 
   (match t.max_height with
   | Some max_height when max_height > 0 ->
