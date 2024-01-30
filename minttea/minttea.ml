@@ -8,7 +8,8 @@ let app = App.make
 
 let run ?(fps = 60) ~initial_model app =
   let prog = Program.make ~app ~fps in
-  Program.run prog initial_model
+  Program.run prog initial_model;
+  Logger.trace (fun f -> f "terminating")
 
 let start app ~initial_model =
   let module App = struct
@@ -17,7 +18,8 @@ let start app ~initial_model =
       let pid =
         spawn_link (fun () ->
             run app ~initial_model;
-            shutdown ())
+            Logger.trace (fun f -> f "about to shutdown");
+            shutdown ~status:0 ())
       in
       Ok pid
   end in

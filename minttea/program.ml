@@ -25,7 +25,9 @@ and handle_input renderer app model event =
       Renderer.show_cursor renderer;
       Renderer.exit_alt_screen renderer;
       Renderer.shutdown renderer;
-      wait_pids [ renderer ]
+      Logger.trace (fun f -> f "runner is waiting for renderer to finish ");
+      wait_pids [ renderer ];
+      Logger.trace (fun f -> f "renderer finishied")
   | () ->
       Renderer.render renderer view;
       loop renderer app model
@@ -64,7 +66,14 @@ let run ({ fps; _ } as t) initial_model =
   let runner =
     spawn (fun () ->
         register "Minttea.runner" (self ());
-        init t initial_model renderer)
+        init t initial_model renderer;
+        Logger.trace (fun f -> f "runner finished"))
   in
-  let io = spawn (fun () -> Io_loop.run runner) in
-  wait_pids [ runner; io ]
+  let io =
+    spawn (fun () ->
+        Io_loop.run runner;
+        Logger.trace (fun f -> f "io finished"))
+  in
+  Logger.trace (fun f -> f "program is waiting for runner and io to finish");
+  wait_pids [ runner; io ];
+  Logger.trace (fun f -> f "runner and io finished")

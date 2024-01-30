@@ -38,11 +38,6 @@ let run runner =
   process_flag (Trap_exit true);
   link runner;
   let termios = Stdin.setup () in
-  let _worker =
-    spawn_link (fun () ->
-        Fun.protect
-          ~finally:(fun () -> Stdin.shutdown termios)
-          (fun () -> loop runner))
-  in
+  let _worker = spawn_link (fun () -> loop runner) in
   let _ = receive () in
   Stdin.shutdown termios
