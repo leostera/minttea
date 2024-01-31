@@ -1,6 +1,9 @@
 open Minttea
 
-let ref = Riot.Ref.make ()
+
+(** [Riot.Symbol] is unique reference across the entire execution of your program.
+    No two calls to [Riot.Symbol.make ()] will ever return the same ['a Riot.Symbol.t]. *)
+let ref = Riot.Symbol.make ()
 let init _ = Command.Seq [ Set_timer (ref, 1.0); Enter_alt_screen ]
 let initial_model = 3
 
