@@ -129,7 +129,14 @@ let init _ = Command.Noop
 let update event model =
   match event with
   | Event.KeyDown (Key "q") -> (model, Command.Quit)
-  | Event.KeyDown _ -> ({ table = Table.update model.table event }, Command.Noop)
+  | Event.KeyDown (Key "b") ->
+      ({ table = Table.update model.table Table.PageUp }, Command.Noop)
+  | Event.KeyDown (Key "f") | Event.KeyDown Space ->
+      ({ table = Table.update model.table Table.PageDown }, Command.Noop)
+  | Event.KeyDown Up ->
+      ({ table = Table.update model.table Table.Up }, Command.Noop)
+  | Event.KeyDown Down ->
+      ({ table = Table.update model.table Table.Down }, Command.Noop)
   | _ -> (model, Command.Noop)
 
 let view model = Table.view model.table ^ "\n\nhint: up/down b/f/space, quit: q"

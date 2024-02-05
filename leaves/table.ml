@@ -29,7 +29,9 @@ type t = {
   height_of_frame : int;
 }
 
-let update t (e : Minttea.Event.t) =
+type action = Up | Down | PageUp | PageDown
+
+let update t (e : action) =
   let go_up t steps =
     let cursor = max (t.cursor - steps) 0 in
     let start_of_frame =
@@ -47,19 +49,18 @@ let update t (e : Minttea.Event.t) =
     { t with cursor; start_of_frame }
   in
   match e with
-  | Minttea.Event.KeyDown (Key "b") -> go_up t t.height_of_frame
-  | KeyDown (Key "f") | KeyDown Space -> go_down t t.height_of_frame
-  | KeyDown Up -> go_up t 1
-  | KeyDown Down -> go_down t 1
-  | _ -> t
+  | PageUp -> go_up t t.height_of_frame
+  | PageDown -> go_down t t.height_of_frame
+  | Up -> go_up t 1
+  | Down -> go_down t 1
 
 let truncate_or_pad_unicode ~width str =
   (* Truncates a Unicode string to a target width with an ellipsis
      or pads it with spaces on the right. *)
   let uuseg_string_length s =
     (* TODO(@sabine): we probably don't want the uuseg dependency
-     or move this somewhere where it actually belongs. Also for uuseg_string_sub,
-     we need to write actually good code. *)
+       or move this somewhere where it actually belongs. Also for uuseg_string_sub,
+       we need to write actually good code. *)
     Uuseg_string.fold_utf_8 `Grapheme_cluster (fun len _ -> len + 1) 0 s
   in
   let uuseg_string_sub s start n =
@@ -96,7 +97,9 @@ let view t =
         |> (t.styles.cell |> Spices.build) "%s"
       in
       let row = row |> List.mapi render_cell |> String.concat "" in
-      if i = t.cursor - t.start_of_frame then (t.styles.cursor |> Spices.build) "%s" row else row
+      if i = t.cursor - t.start_of_frame then
+        (t.styles.cursor |> Spices.build) "%s" row
+      else row
     in
     t |> get_visible_rows |> List.mapi render_row |> String.concat "\n"
   in
