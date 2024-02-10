@@ -6,22 +6,26 @@ type t = {
   full_char : string;
   empty_char : string;
   trail_char : string;
+  show_percentage : bool;
 }
 
 let default_full_char = "█"
 let default_empty_char = " "
 let default_trail_char = ""
 let default_color = `Plain (Spices.color "#00FFA3")
+let default_show_percentage = true
 
 let make ?(percent = 0.) ?(full_char = default_full_char)
     ?(trail_char = default_trail_char) ?(empty_char = default_empty_char)
-    ?(color = default_color) ~width () =
+    ?(color = default_color) ?(show_percentage = default_show_percentage) ~width
+    () =
   {
     width;
     percent;
     full_char;
     empty_char;
     trail_char;
+    show_percentage;
     finished = false;
     color =
       (match color with
@@ -74,6 +78,6 @@ let view t =
   List.init empty_size (fun _ -> t.empty_char)
   |> List.iter (fun cell -> Format.fprintf fmt "%s" cell);
 
-  Format.fprintf fmt " %4.1f%%%!" (percent *. 100.);
+  if t.show_percentage then Format.fprintf fmt " %4.1f%%%!" (percent *. 100.);
 
   Buffer.contents buf
