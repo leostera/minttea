@@ -1,12 +1,12 @@
 type color = Tty.Color.t
 
-exception Invalid_gradient_color
+exception Invalid_gradient_color of color
 
 let to_rgb c =
   match c with
   | Tty.Color.RGB (r, g, b) -> `rgb (r, g, b)
   | ANSI i | ANSI256 i -> Colors.ANSI.to_rgb (`ansi i)
-  | No_color -> raise Invalid_gradient_color
+  | No_color -> raise (Invalid_gradient_color c)
 
 let make ~start ~finish ~steps : color array =
   let colors = Array.make steps start in

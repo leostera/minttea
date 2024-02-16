@@ -59,7 +59,8 @@ let run ({ fps; _ } as t) initial_model =
   Printexc.record_backtrace true;
   let renderer =
     spawn (fun () ->
-        process_flag (Priority High);
+        (* NOTE(@leostera): reintroduce this when riot brings back process-stealing *)
+        (* process_flag (Priority High); *)
         let runner = Process.await_name "Minttea.runner" in
         Renderer.run ~fps ~runner)
   in

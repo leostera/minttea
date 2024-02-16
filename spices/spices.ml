@@ -1,6 +1,10 @@
 [@@@warning "-69"]
 
-type color = Tty.Color.t
+type color = Tty.Color.t = private
+  | RGB of int * int * int
+  | ANSI of int
+  | ANSI256 of int
+  | No_color
 
 let color ?(profile = Tty.Profile.default) raw =
   let color = Tty.Color.make raw in

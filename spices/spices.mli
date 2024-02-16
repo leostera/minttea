@@ -1,4 +1,8 @@
-type color
+type color = Tty.Color.t = private
+  | RGB of int * int * int
+  | ANSI of int
+  | ANSI256 of int
+  | No_color
 
 val color : ?profile:Tty.Profile.t -> string -> color
 val gradient : start:color -> finish:color -> steps:int -> color array

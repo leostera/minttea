@@ -30,6 +30,10 @@ let make ?(percent = 0.) ?(full_char = default_full_char)
     color =
       (match color with
       | `Plain c -> `Plain c
+      | `Gradient Spices.(No_color, No_color) ->
+          `Plain (Tty.Color.of_rgb (127, 127, 127))
+      | `Gradient Spices.(No_color, c) -> `Plain c
+      | `Gradient Spices.(c, No_color) -> `Plain c
       | `Gradient (start, finish) ->
           `Gradient (Spices.gradient ~start ~finish ~steps:width));
   }
