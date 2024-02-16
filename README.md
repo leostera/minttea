@@ -7,7 +7,7 @@ Architecture.
 
 [bubbletea]: https://github.com/charmbracelet/bubbletea
 
-<img src="./examples/views/demo.gif"/>
+<img src="https://github.com/leostera/minttea/raw/main/examples/views/demo.gif"/>
 
 ## Tutorial
 
@@ -208,14 +208,14 @@ We can now run our application:
 
 And we get our lovely little TUI app:
 
-<img src="./examples/basic/demo.gif"/>
+<img src="https://github.com/leostera/minttea/raw/main/examples/basic/demo.gif"/>
 
 ## What's Next?
 
 This tutorial covers the very basics of building an interactive terminal UI
 with Mint Tea, but in the real world you'll also need to perform I/O.
 
-You can also check our other [examples](./examples) to see more ways in which
+You can also check our other [examples in GitHub](https://github.com/leostera/minttea/tree/main/examples) to see more ways in which
 you can build your TUIs.
 
 ## Libraries to use with Mint Tea
