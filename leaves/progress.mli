@@ -8,6 +8,7 @@ val make :
   ?color:
     [< `Gradient of Spices.color * Spices.color
     | `Plain of Spices.color > `Plain ] ->
+  ?show_percentage:bool ->
   width:int ->
   unit ->
   t
