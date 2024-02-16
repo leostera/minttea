@@ -24,8 +24,13 @@
 
 #### Leaves
 
+* Add new Virtualized Table component with support for columns and moving a
+  cursor around – thanks @sabine 🧡
+
 * Progress bar now defaults color to gray if the terminal profile isn't
   supported
+
+* Progress bar now can toggle the percentage number – thanks @wesleimp 🌈
 
 ## 0.0.2
 
