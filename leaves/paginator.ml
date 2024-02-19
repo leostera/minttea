@@ -9,7 +9,9 @@ type t = {
     total_pages : int;
     active_dot : string;
     inactive_dot : string;
+    (* TODO: fix this by following what's done in spices *)
     arabic_format : (int -> int -> string, unit, string) format;
+    text_style : Spices.style;
   }
 
 let set_total_pages t items =
@@ -64,8 +66,7 @@ return Model{
 
  *)
 (* TODO: add text_style option to t and make and fix view code to use it correctly *)
-
-let make ?(style = Arabic) ?(page = 0) ?(per_page = 1) ?(total_pages = 1) ?(active_dot = "•") ?(inactive_dot = "○") ?(arabic_format: (int -> int -> string, unit, string) format = "%d/%d") () =
+let make ?(style = Arabic) ?(page = 0) ?(per_page = 1) ?(total_pages = 1) ?(active_dot = "•") ?(inactive_dot = "○") ?(arabic_format: (int -> int -> string, unit, string) format = "%d/%d") ?(text_style = Spices.default) () =
   {
     style;
     page;
@@ -74,7 +75,15 @@ let make ?(style = Arabic) ?(page = 0) ?(per_page = 1) ?(total_pages = 1) ?(acti
     active_dot;
     inactive_dot;
     arabic_format;
+    text_style;
   }
+
+let update t (e : Minttea.Event.t) =
+  match e with
+  | KeyDown (Key "h" | Left) -> prev_page t
+  | KeyDown (Key "l" | Right) -> next_page t
+  | _ -> t
+
 
 let dots_view t text_style =
   let text_style = text_style |> Spices.build in
@@ -92,10 +101,9 @@ let dots_view t text_style =
 let arabic_view t text_style =
   let text_style = text_style |> Spices.build in
   let txt = Format.sprintf t.arabic_format (t.page + 1) t.total_pages in
-  text_style t.arabic_format 1 2
+  text_style "%s" txt
 
 let view t =
-  let text_style = Spices.default in
   match t.style with
-  | Dots -> dots_view t text_style
-  | Arabic -> arabic_view t text_style
+  | Dots -> dots_view t t.text_style
+  | Arabic -> arabic_view t t.text_style
