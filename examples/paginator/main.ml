@@ -20,9 +20,10 @@ let view model =
   let x = List.to_seq model.items in
   let y = Seq.drop start x in
   let z = Seq.take (end_pos - start) y in
-  "\n Paginator example\n\n"
-  ^ String.concat "\n" (List.of_seq z)
-  ^ Format.sprintf "\n Paginator example: \n%s\n" @@ Paginator.view model.paginator
+  "\n Look at all these items\n\n "
+  ^ String.concat "\n " (List.of_seq z)
+  ^ Format.sprintf "\n\n %s\n" (Paginator.view model.paginator)
+  ^ "\n h/l ←/→ page • q: quit\n"
 
 let app = Minttea.app ~init ~update ~view ()
 let () = Minttea.start ~initial_model app
