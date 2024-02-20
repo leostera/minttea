@@ -22,7 +22,7 @@ let view model =
   let z = Seq.take (end_pos - start) y in
   "\n Look! We have 9 items!\n\n "
   ^ String.concat "\n " (List.of_seq z)
-  ^ Format.sprintf "\n\n %s\n" (Paginator.view model.paginator)
+  ^ Format.sprintf "\n %s\n" (Paginator.view model.paginator)
   ^ "\n h/l ←/→ page • q: quit\n"
 
 let app = Minttea.app ~init ~update ~view ()
