@@ -83,7 +83,15 @@ val make :
   t
 (** [make ()] creates a new {Paginator.t}
 
-    TODO: explain options??
+    A different start page can be specified using `page`.
+
+    For helper functions like `get_slice_bounds` to work correctly, the number of items to be rendered on each page can be passed to `per_page`.
+
+    By default, Paginator uses Numerals format, displaying page 1 of 3 as "1/3".
+    The format for numerals can be changed using `numerals_format` to any format that takes two integers, e.g. "%d of %d" rendering "1 of 3" instead.
+    Alternatively, `style` can be specified as `Paginator.Dots` to display pages using characters instead with the `active_dot` "•" and inactive_dot "○" defaults, which can be specified/overriden.
+
+    By default, Spices.default is used, which can be overriden using `text_style`.
 
     {@ocaml[
       let paginator = Paginator.make ()
