@@ -1,19 +1,20 @@
 open Minttea
 open Leaves
 
-type model = { paginator : Paginator.t; items: string list }
+type model = { paginator : Paginator.t; items : string list }
 
 let items = List.init 9 (fun x -> "Item " ^ string_of_int (x + 1))
-let paginator = Paginator.make ~per_page: 3 ~style: Paginator.Dots ()
+let paginator = Paginator.make ~per_page:3 ~style:Paginator.Dots ()
 let paginator, _ = Paginator.set_total_pages paginator 9
-
 let initial_model = { paginator; items }
 let init _ = Command.Hide_cursor
 
 let update (event : Event.t) model =
   match event with
   | Event.KeyDown (Key "q") -> (model, Command.Quit)
-  | _ -> ({ model with paginator = Paginator.update model.paginator event }, Command.Noop)
+  | _ ->
+      ( { model with paginator = Paginator.update model.paginator event },
+        Command.Noop )
 
 let view model =
   let start, end_pos = Paginator.get_slice_bounds model.paginator 9 in
