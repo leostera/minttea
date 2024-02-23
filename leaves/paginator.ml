@@ -7,7 +7,6 @@ type t = {
   total_pages : int;
   active_dot : string;
   inactive_dot : string;
-  (* TODO: fix this by following what's done in spices *)
   numerals_format : (int -> int -> string, unit, string) format;
   text_style : Spices.style;
 }
