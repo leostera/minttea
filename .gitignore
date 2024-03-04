@@ -1,2 +1,7 @@
 _build
 .DS_Store
+
+# nix ignores
+.direnv
+result
+.envrc
