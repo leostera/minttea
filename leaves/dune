@@ -4,4 +4,4 @@
 (library
  (public_name leaves)
  (name leaves)
- (libraries minttea spices ptime ptime.clock.os uuseg))
+ (libraries minttea spices ptime ptime.clock.os uuseg str))
