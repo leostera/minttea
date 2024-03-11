@@ -7,6 +7,8 @@ type color = Tty.Color.t = private
 val color : ?profile:Tty.Profile.t -> string -> color
 val gradient : start:color -> finish:color -> steps:int -> color array
 
+module Border = Border
+
 type style
 
 val default : style
@@ -31,6 +33,7 @@ val reverse : bool -> style -> style
 val strikethrough : bool -> style -> style
 val underline : bool -> style -> style
 val width : int option -> style -> style
+val border : Border.t -> style -> style
 
 type 'a style_fun =
   ('a, Format.formatter, unit, unit, unit, string) format6 -> 'a

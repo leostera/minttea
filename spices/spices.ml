@@ -11,6 +11,8 @@ let color ?(profile = Tty.Profile.default) raw =
   let color = Tty.Profile.convert profile color in
   color
 
+module Border = Border
+
 let gradient = Gradient.make
 
 type style = {
@@ -35,6 +37,7 @@ type style = {
   strikethrough : bool;
   underline : bool;
   width : int option;
+  border : Border.t option;
 }
 
 let default =
@@ -60,6 +63,7 @@ let default =
     strikethrough = false;
     underline = false;
     width = None;
+    border = None;
   }
 
 let bg x t = { t with background = Some x }
@@ -83,6 +87,7 @@ let reverse x t = { t with reverse = x }
 let strikethrough x t = { t with strikethrough = x }
 let underline x t = { t with underline = x }
 let width x t = { t with width = x }
+let border x t = { t with border = Some x }
 
 let do_render t str =
   (* Pre-process padding *)
@@ -131,6 +136,13 @@ let do_render t str =
       fmt lines;
     Format.fprintf fmt "%!";
     Buffer.contents buf
+  in
+
+  (* handle border *)
+  let str =
+    match t.border with
+    | Some border -> Border.build_border border str
+    | None -> str
   in
 
   (* handle margin *)
