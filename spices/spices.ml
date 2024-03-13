@@ -11,9 +11,8 @@ let color ?(profile = Tty.Profile.default) raw =
   let color = Tty.Profile.convert profile color in
   color
 
-module Border = Border
-
 let gradient = Gradient.make
+let get_border = Border.get_border
 
 type style = {
   background : color option;

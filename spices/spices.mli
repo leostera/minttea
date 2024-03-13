@@ -6,8 +6,7 @@ type color = Tty.Color.t = private
 
 val color : ?profile:Tty.Profile.t -> string -> color
 val gradient : start:color -> finish:color -> steps:int -> color array
-
-module Border = Border
+val get_border : Border.border_type -> Border.t
 
 type style
 

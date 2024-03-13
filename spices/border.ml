@@ -198,3 +198,23 @@ let hidden_border =
     middle_top = Some " ";
     middle_bottom = Some " ";
   }
+
+type border_type =
+  | Normal
+  | Rounded
+  | Block
+  | Outer_half_block
+  | Inner_half_block
+  | Thick
+  | Double
+  | Hidden
+
+let get_border = function
+  | Normal -> normal_border
+  | Rounded -> rounded_border
+  | Block -> block_border
+  | Outer_half_block -> outer_half_block_border
+  | Inner_half_block -> inner_half_block_border
+  | Thick -> thick_border
+  | Double -> double_border
+  | Hidden -> hidden_border
