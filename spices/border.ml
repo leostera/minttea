@@ -37,6 +37,25 @@ type t = {
   middle_bottom : string option;
 }
 
+let make ?top ?left ?bottom ?right ?top_left ?top_right ?bottom_left
+    ?bottom_right ?middle_left ?middle_right ?middle ?middle_top ?middle_bottom
+    (_unit : unit) =
+  {
+    top;
+    left;
+    bottom;
+    right;
+    top_left;
+    top_right;
+    bottom_left;
+    bottom_right;
+    middle_left;
+    middle_right;
+    middle;
+    middle_top;
+    middle_bottom;
+  }
+
 let build_border (border : t) text =
   let top = Option.value border.top ~default:"" in
   let left = Option.value border.left ~default:"" in
@@ -63,7 +82,7 @@ let build_border (border : t) text =
   let text = String.concat "\n" l in
   Format.sprintf "%s\n%s\n%s" top_border text bottom_border
 
-let normal_border =
+let normal =
   {
     top = Some "─";
     bottom = Some "─";
@@ -80,7 +99,7 @@ let normal_border =
     middle_bottom = Some "┴";
   }
 
-let rounded_border =
+let rounded =
   {
     top = Some "─";
     bottom = Some "─";
@@ -97,7 +116,7 @@ let rounded_border =
     middle_bottom = Some "┴";
   }
 
-let block_border =
+let block =
   {
     top = Some "█";
     bottom = Some "█";
@@ -114,7 +133,7 @@ let block_border =
     middle_bottom = None;
   }
 
-let outer_half_block_border =
+let outer_half_block =
   {
     top = Some "▀";
     bottom = Some "▄";
@@ -131,7 +150,7 @@ let outer_half_block_border =
     middle_bottom = None;
   }
 
-let inner_half_block_border =
+let inner_half_block =
   {
     top = Some "▄";
     bottom = Some "▀";
@@ -148,7 +167,7 @@ let inner_half_block_border =
     middle_bottom = None;
   }
 
-let thick_border =
+let thick =
   {
     top = Some "━";
     bottom = Some "━";
@@ -165,7 +184,7 @@ let thick_border =
     middle_bottom = Some "┻";
   }
 
-let double_border =
+let double =
   {
     top = Some "═";
     bottom = Some "═";
@@ -182,7 +201,7 @@ let double_border =
     middle_bottom = Some "╩";
   }
 
-let hidden_border =
+let hidden =
   {
     top = Some " ";
     bottom = Some " ";
@@ -198,23 +217,3 @@ let hidden_border =
     middle_top = Some " ";
     middle_bottom = Some " ";
   }
-
-type border_type =
-  | Normal
-  | Rounded
-  | Block
-  | Outer_half_block
-  | Inner_half_block
-  | Thick
-  | Double
-  | Hidden
-
-let get_border = function
-  | Normal -> normal_border
-  | Rounded -> rounded_border
-  | Block -> block_border
-  | Outer_half_block -> outer_half_block_border
-  | Inner_half_block -> inner_half_block_border
-  | Thick -> thick_border
-  | Double -> double_border
-  | Hidden -> hidden_border
