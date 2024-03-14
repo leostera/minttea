@@ -6,7 +6,36 @@ type color = Tty.Color.t = private
 
 val color : ?profile:Tty.Profile.t -> string -> color
 val gradient : start:color -> finish:color -> steps:int -> color array
-val get_border : Border.border_type -> Border.t
+
+module Border : sig
+  type t
+
+  val make :
+    ?top:string ->
+    ?left:string ->
+    ?bottom:string ->
+    ?right:string ->
+    ?top_left:string ->
+    ?top_right:string ->
+    ?bottom_left:string ->
+    ?bottom_right:string ->
+    ?middle_left:string ->
+    ?middle_right:string ->
+    ?middle:string ->
+    ?middle_top:string ->
+    ?middle_bottom:string ->
+    unit ->
+    t
+
+  val normal : t
+  val rounded : t
+  val block : t
+  val outer_half_block : t
+  val inner_half_block : t
+  val thick : t
+  val double : t
+  val hidden : t
+end
 
 type style
 

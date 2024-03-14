@@ -2,15 +2,12 @@ open Minttea
 
 let red_with_border fmt =
   Spices.(
-    default
-    |> border (get_border Thick)
-    |> padding_left 5 |> padding_right 5
+    default |> border Border.thick |> padding_left 5 |> padding_right 5
     |> fg (color "#FF0000")
     |> build)
     fmt
 
-let overlay_border fmt =
-  Spices.(default |> border (get_border Double) |> build) fmt
+let overlay_border fmt = Spices.(default |> border Border.double |> build) fmt
 
 type s = { text : string }
 
