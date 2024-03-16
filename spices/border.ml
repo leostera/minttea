@@ -39,7 +39,7 @@ type t = {
 
 let make ?top ?left ?bottom ?right ?top_left ?top_right ?bottom_left
     ?bottom_right ?middle_left ?middle_right ?middle ?middle_top ?middle_bottom
-    (_unit : unit) =
+    () =
   {
     top;
     left;
