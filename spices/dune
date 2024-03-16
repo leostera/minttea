@@ -1,4 +1,4 @@
 (library
  (public_name spices)
  (name spices)
- (libraries tty colors))
+ (libraries tty colors str uuseg))
