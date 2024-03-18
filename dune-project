@@ -44,5 +44,6 @@
    (ocaml (>= "5.1"))
    (colors (>= "0.0.1"))
    (mdx (and :with-test (>= "2.3.1")))
-   (tty (>= "0.0.2")))
+   (tty (>= "0.0.2"))
+   uuseg)
  (tags (styling styles declarative framework tui "terminal-ui" apps)))

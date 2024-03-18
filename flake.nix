@@ -24,7 +24,11 @@
             devShells = {
               default = mkShell {
                 buildInputs = [ ocamlPackages.utop ];
-                inputsFrom = [ self'.packages.spices self'.packages.default self'.packages.leaves ];
+                inputsFrom = [
+                  self'.packages.spices
+                  self'.packages.default
+                  self'.packages.leaves
+                ];
               };
             };
 
@@ -63,6 +67,7 @@
                   (mdx.override {
                     inherit logs;
                   })
+                  uuseg
                 ];
                 src = ./.;
               };
