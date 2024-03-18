@@ -1,15 +1,27 @@
 {
   description = "A little TUI framework for OCaml";
 
-  inputs.colors.url = "github:ocaml-tui/colors";
-  inputs.colors.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.minttea.url = "github:leostera/minttea";
-  inputs.minttea.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.riot.url = "github:riot-ml/riot";
-  inputs.riot.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.tty.url = "github:ocaml-tui/tty";
-  inputs.tty.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    colors = {
+      url = "github:ocaml-tui/colors";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    minttea = {
+      url = "github:leostera/minttea";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    riot = {
+      url = "github:riot-ml/riot";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.minttea.follows = "minttea";
+    };
+    tty = {
+      url = "github:ocaml-tui/tty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
