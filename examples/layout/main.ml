@@ -22,14 +22,14 @@ let init _model = Command.Noop
 (* Update function with pattern matching for events *)
 let update event model =
   match event with
-  | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
-  | Event.KeyDown (Up | Key "k") ->
+  | Event.KeyDown (Key { key = "q"; _ } | Escape) -> (model, Command.Quit)
+  | Event.KeyDown (Up | Key { key = "k"; _ }) ->
       let cursor =
         if model.cursor = 0 then List.length model.choices - 1
         else model.cursor - 1
       in
       ({ model with cursor }, Command.Noop)
-  | Event.KeyDown (Down | Key "j") ->
+  | Event.KeyDown (Down | Key { key = "j"; _ }) ->
       let cursor =
         if model.cursor = List.length model.choices - 1 then 0
         else model.cursor + 1

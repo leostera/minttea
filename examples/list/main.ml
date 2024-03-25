@@ -77,9 +77,9 @@ let update event model : model * Command.t =
         let elements = FList.get_selection model.elements in
         ({ model with choices = Some elements }, Command.Quit)
     (* Quit right away *)
-    | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
+    | Event.KeyDown (Key { key = "q"; _ } | Escape) -> (model, Command.Quit)
     (* Open the search Text_input *)
-    | Event.KeyDown (Key "/") ->
+    | Event.KeyDown (Key { key = "/"; _ }) ->
         ({ model with edit_filter = true }, Command.Noop)
     (* Delegate the rest to the list *)
     | _ ->

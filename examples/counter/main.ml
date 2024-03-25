@@ -14,8 +14,8 @@ let initial_model = { counter = 0; keys = [] }
 
 let update event model =
   match event with
-  | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
-  | Event.KeyDown (Key k) ->
+  | Event.KeyDown (Key { key = "q"; _ } | Escape) -> (model, Command.Quit)
+  | Event.KeyDown (Key { key = k; _ }) ->
       let model = { counter = model.counter + 1; keys = model.keys @ [ k ] } in
       (model, Command.Noop)
   | _ -> (model, Command.Noop)

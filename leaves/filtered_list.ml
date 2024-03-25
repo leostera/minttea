@@ -89,7 +89,7 @@ let next_visible cur shown =
 
 let update event (model : t) =
   match event with
-  | Event.KeyDown (Key "s" | Space) ->
+  | Event.KeyDown (Key { key = "s"; _ } | Space) ->
       (* select current element *)
       {
         model with
@@ -99,7 +99,7 @@ let update event (model : t) =
               if idx = model.cursor then (not s, e) else (s, e))
             model.elements;
       }
-  | Event.KeyDown (Up | Key "k") ->
+  | Event.KeyDown (Up | Key { key = "k"; _ }) ->
       let len = List.length model.elements in
       if len = 0 then model
       else
@@ -110,7 +110,7 @@ let update event (model : t) =
             | None -> (model.cursor + len - 1) mod len
             | Some shown -> prev_visible model.cursor shown);
         }
-  | Event.KeyDown (Down | Key "j") ->
+  | Event.KeyDown (Down | Key { key = "j"; _ }) ->
       let len = List.length model.elements in
       if len = 0 then model
       else
@@ -121,10 +121,10 @@ let update event (model : t) =
             | None -> (model.cursor + 1) mod len
             | Some shown -> next_visible model.cursor shown);
         }
-  | Event.KeyDown (Left | Key "h") ->
+  | Event.KeyDown (Left | Key { key = "h"; _ }) ->
       (* previous page, not wrapping *)
       { model with cursor = max (model.cursor - model.max_height) 0 }
-  | Event.KeyDown (Right | Key "l") ->
+  | Event.KeyDown (Right | Key { key = "l"; _ }) ->
       (* next page, not wrapping *)
       {
         model with

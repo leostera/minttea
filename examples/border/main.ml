@@ -16,8 +16,8 @@ let initial_model = { text = "" }
 
 let update event model =
   match event with
-  | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
-  | Event.KeyDown (Key k) ->
+  | Event.KeyDown (Key { key = "q"; _ } | Escape) -> (model, Command.Quit)
+  | Event.KeyDown (Key { key = k; _ }) ->
       let model = { text = model.text ^ k } in
       (model, Command.Noop)
   | Event.KeyDown Space ->

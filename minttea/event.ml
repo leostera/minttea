@@ -1,5 +1,8 @@
 open Riot
 
+type modifier = Ctrl
+type key_event = { key : string; modifier : modifier option }
+
 type key =
   | Up
   | Down
@@ -9,7 +12,7 @@ type key =
   | Escape
   | Backspace
   | Enter
-  | Key of string
+  | Key of key_event
 
 let key_to_string key =
   match key with
@@ -21,7 +24,8 @@ let key_to_string key =
   | Escape -> "<esc>"
   | Backspace -> "<backspace>"
   | Enter -> "<enter>"
-  | Key k -> k
+  | Key { key; modifier = Some Ctrl } -> "<c-" ^ key ^ ">"
+  | Key { key; modifier = None } -> key
 
 type t =
   | KeyDown of key

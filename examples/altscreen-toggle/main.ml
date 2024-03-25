@@ -13,7 +13,7 @@ let initial_model = { altscreen = false; quitting = false }
 
 let update event model =
   match event with
-  | Event.KeyDown (Key "q" | Escape) ->
+  | Event.KeyDown (Key { key = "q"; _ } | Escape) ->
       ({ model with quitting = true }, Command.Quit)
   | Event.KeyDown Space ->
       let cmd =

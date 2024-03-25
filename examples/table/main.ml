@@ -128,10 +128,10 @@ let init _ = Command.Noop
 
 let update event model =
   match event with
-  | Event.KeyDown (Key "q") -> (model, Command.Quit)
-  | Event.KeyDown (Key "b") ->
+  | Event.KeyDown (Key { key = "q"; _ }) -> (model, Command.Quit)
+  | Event.KeyDown (Key { key = "b"; _ }) ->
       ({ table = Table.update model.table Table.PageUp }, Command.Noop)
-  | Event.KeyDown (Key "f") | Event.KeyDown Space ->
+  | Event.KeyDown (Key { key = "f"; _ }) | Event.KeyDown Space ->
       ({ table = Table.update model.table Table.PageDown }, Command.Noop)
   | Event.KeyDown Up ->
       ({ table = Table.update model.table Table.Up }, Command.Noop)

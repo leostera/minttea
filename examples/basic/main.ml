@@ -30,16 +30,16 @@ let init _model = Command.Noop
 let update event model =
   match event with
   (* if we press `q` or the escape key, we exit *)
-  | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
+  | Event.KeyDown (Key { key = "q"; _ } | Escape) -> (model, Command.Quit)
   (* if we press up or `k`, we move up in the list *)
-  | Event.KeyDown (Up | Key "k") ->
+  | Event.KeyDown (Up | Key { key = "k"; _ }) ->
       let cursor =
         if model.cursor = 0 then List.length model.choices - 1
         else model.cursor - 1
       in
       ({ model with cursor }, Command.Noop)
   (* if we press down or `j`, we move down in the list *)
-  | Event.KeyDown (Down | Key "j") ->
+  | Event.KeyDown (Down | Key { key = "j"; _ }) ->
       let cursor =
         if model.cursor = List.length model.choices - 1 then 0
         else model.cursor + 1

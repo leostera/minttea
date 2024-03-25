@@ -32,7 +32,7 @@ let update event model =
   | Event.Frame now ->
       let spinners = model.spinners |> List.map (Sprite.update ~now) in
       ({ spinners }, Command.Noop)
-  | Event.KeyDown (Key "q") -> (model, Command.Quit)
+  | Event.KeyDown (Key { key = "q"; _ }) -> (model, Command.Quit)
   | _ -> (model, Command.Noop)
 
 let view model =

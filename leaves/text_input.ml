@@ -95,7 +95,7 @@ let update t (e : Minttea.Event.t) =
       {
         (match k with
         | Backspace -> backspace t
-        | Key s -> write t s
+        | Key s -> write t s.key
         | Left -> character_backward t
         | Right -> character_forward t
         | Space -> space t

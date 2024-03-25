@@ -30,7 +30,7 @@ let initial_model =
 
 let update event m =
   match event with
-  | Event.KeyDown (Key "q" | Escape) -> (m, Command.Quit)
+  | Event.KeyDown (Key { key = "q"; _ } | Escape) -> (m, Command.Quit)
   | Event.Frame _now ->
       let gray_bar = Progress.increment m.gray_bar 0.001 in
       let color_bar = Progress.increment m.color_bar (Random.float 0.0001) in
