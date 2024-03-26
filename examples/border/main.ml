@@ -16,14 +16,14 @@ let initial_model = { text = "" }
 
 let update event model =
   match event with
-  | Event.KeyDown (Key { key = "q"; _ } | Escape) -> (model, Command.Quit)
-  | Event.KeyDown (Key { key = k; _ }) ->
+  | Event.KeyDown ((Key "q" | Escape), _) -> (model, Command.Quit)
+  | Event.KeyDown (Key k, _modifier) ->
       let model = { text = model.text ^ k } in
       (model, Command.Noop)
-  | Event.KeyDown Space ->
+  | Event.KeyDown (Space, _modifier) ->
       let model = { text = model.text ^ " " } in
       (model, Command.Noop)
-  | Event.KeyDown Enter ->
+  | Event.KeyDown (Enter, _modifier) ->
       let model = { text = model.text ^ "\n" } in
       (model, Command.Noop)
   | _ -> (model, Command.Noop)

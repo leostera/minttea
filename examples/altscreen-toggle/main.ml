@@ -13,9 +13,9 @@ let initial_model = { altscreen = false; quitting = false }
 
 let update event model =
   match event with
-  | Event.KeyDown (Key { key = "q"; _ } | Escape) ->
+  | Event.KeyDown ((Key "q" | Escape), _modifier) ->
       ({ model with quitting = true }, Command.Quit)
-  | Event.KeyDown Space ->
+  | Event.KeyDown (Space, _modifier) ->
       let cmd =
         if model.altscreen then Command.Exit_alt_screen
         else Command.Enter_alt_screen

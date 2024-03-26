@@ -1,8 +1,7 @@
 open Riot
 
 module Event : sig
-  type modifier = Ctrl
-  type key_event = { key : string; modifier : modifier option }
+  type modifier = No_modifier | Ctrl
 
   type key =
     | Up
@@ -13,10 +12,10 @@ module Event : sig
     | Escape
     | Backspace
     | Enter
-    | Key of key_event
+    | Key of string
 
   type t =
-    | KeyDown of key
+    | KeyDown of key * modifier
     | Timer of unit Ref.t
     | Frame of Ptime.t
     | Custom of Message.t
