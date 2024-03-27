@@ -45,14 +45,14 @@ let update event model : model * Command.t =
   if model.edit_filter then
     match event with
     (* validate the search and go back to navigating the list *)
-    | Event.KeyDown Enter ->
+    | Event.KeyDown (Enter, _modifier) ->
         let elements =
           FList.show_string_contains model.elements
             (Input.current_text model.filter_input)
         in
         ({ model with elements; edit_filter = false }, Command.Noop)
     (* cancel the search and go back to navigating the list *)
-    | Event.KeyDown Escape ->
+    | Event.KeyDown (Escape, _modifier) ->
         let elements = FList.show_all model.elements in
         ( {
             model with
@@ -73,13 +73,13 @@ let update event model : model * Command.t =
   else
     match event with
     (* Validate the selection, print it and quit *)
-    | Event.KeyDown Enter ->
+    | Event.KeyDown (Enter, _modifier) ->
         let elements = FList.get_selection model.elements in
         ({ model with choices = Some elements }, Command.Quit)
     (* Quit right away *)
-    | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
+    | Event.KeyDown ((Key "q" | Escape), _modifier) -> (model, Command.Quit)
     (* Open the search Text_input *)
-    | Event.KeyDown (Key "/") ->
+    | Event.KeyDown (Key "/", _modifier) ->
         ({ model with edit_filter = true }, Command.Noop)
     (* Delegate the rest to the list *)
     | _ ->

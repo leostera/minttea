@@ -11,7 +11,7 @@ let init _ = Command.Hide_cursor
 
 let update (event : Event.t) model =
   match event with
-  | Event.KeyDown (Key "q") -> (model, Command.Quit)
+  | Event.KeyDown (Key "q", _modifier) -> (model, Command.Quit)
   | _ ->
       ( { model with paginator = Paginator.update model.paginator event },
         Command.Noop )

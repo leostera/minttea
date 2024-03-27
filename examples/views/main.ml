@@ -80,7 +80,7 @@ exception Exit
 
 let update event model =
   try
-    if event = Event.KeyDown (Key "q") then raise Exit
+    if event = Event.KeyDown (Key "q", No_modifier) then raise Exit
     else
       let section, cmd =
         match model.section with
@@ -106,10 +106,10 @@ let update event model =
             | _ -> (model.section, Command.Noop))
         | Selection_screen screen -> (
             match event with
-            | Event.KeyDown Space -> transition model.section
-            | Event.KeyDown (Key "j" | Down) ->
+            | Event.KeyDown (Space, _modifier) -> transition model.section
+            | Event.KeyDown ((Key "j" | Down), _modifier) ->
                 (Selection_screen (select_next screen), Command.Noop)
-            | Event.KeyDown (Key "k" | Up) ->
+            | Event.KeyDown ((Key "k" | Up), _modifier) ->
                 (Selection_screen (select_prev screen), Command.Noop)
             | Event.Timer ref ->
                 let timeout = screen.timeout - 1 in

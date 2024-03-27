@@ -22,20 +22,20 @@ let init _model = Command.Noop
 (* Update function with pattern matching for events *)
 let update event model =
   match event with
-  | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
-  | Event.KeyDown (Up | Key "k") ->
+  | Event.KeyDown ((Key "q" | Escape), _modifier) -> (model, Command.Quit)
+  | Event.KeyDown ((Up | Key "k"), _modifier) ->
       let cursor =
         if model.cursor = 0 then List.length model.choices - 1
         else model.cursor - 1
       in
       ({ model with cursor }, Command.Noop)
-  | Event.KeyDown (Down | Key "j") ->
+  | Event.KeyDown ((Down | Key "j"), _modifier) ->
       let cursor =
         if model.cursor = List.length model.choices - 1 then 0
         else model.cursor + 1
       in
       ({ model with cursor }, Command.Noop)
-  | Event.KeyDown (Enter | Space) ->
+  | Event.KeyDown ((Enter | Space), _modifier) ->
       let toggle status =
         match status with `selected -> `unselected | `unselected -> `selected
       in

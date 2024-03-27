@@ -91,7 +91,7 @@ let jump_to_end t = move_cursor t `Jump_to_end
 
 let update t (e : Minttea.Event.t) =
   match e with
-  | KeyDown k ->
+  | KeyDown (k, _) ->
       {
         (match k with
         | Backspace -> backspace t

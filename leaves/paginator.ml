@@ -52,8 +52,8 @@ let make ?(style = Numerals) ?(page = 0) ?(per_page = 1) ?(total_pages = 1)
 
 let update t (e : Minttea.Event.t) =
   match e with
-  | KeyDown (Key "h" | Left) -> prev_page t
-  | KeyDown (Key "l" | Right) -> next_page t
+  | KeyDown ((Key "h" | Left), _) -> prev_page t
+  | KeyDown ((Key "l" | Right), _) -> next_page t
   | _ -> t
 
 let dots_view t text_style =

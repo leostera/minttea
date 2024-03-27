@@ -4,7 +4,8 @@ open Tty
 
 type Message.t += Input of Event.t
 
-let translate : string -> Event.key = function
+let translate key =
+  match key with
   | " " -> Space
   | "\027" -> Escape
   | "\027[A" -> Up
@@ -25,10 +26,16 @@ let rec loop runner =
             match Stdin.read_utf8 () with
             | `Read "[" -> (
                 match Stdin.read_utf8 () with
-                | `Read key -> KeyDown (translate ("\027[" ^ key))
-                | _ -> KeyDown (translate key))
-            | _ -> KeyDown (translate key))
-        | key -> KeyDown (translate key)
+                | `Read key -> KeyDown (translate ("\027[" ^ key), No_modifier)
+                | _ -> KeyDown (translate key, No_modifier))
+            | _ -> KeyDown (translate key, No_modifier))
+        | "\n" -> KeyDown (translate key, No_modifier)
+        | key when key >= "\x01" && key <= "\x1a" ->
+            let key =
+              key.[0] |> Char.code |> ( + ) 96 |> Char.chr |> String.make 1
+            in
+            KeyDown (translate key, Ctrl)
+        | key -> KeyDown (translate key, No_modifier)
       in
       send runner (Input msg);
       loop runner
