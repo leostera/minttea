@@ -33,3 +33,5 @@ let view t ~text_style str =
 
 let focus t = { t with focus = true; show = true }
 let unfocus t = { t with focus = false }
+let disable_blink t = { t with blink = false; show = true }
+let enable_blink t = { t with blink = true; show = true }

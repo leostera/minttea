@@ -9,7 +9,12 @@ let white = Spices.color "#FFFFFF"
 let cursor =
   Cursor.make ~style:Spices.(default |> bg mint |> fg white |> bold true) ()
 
-let initial_model = { text = Text_input.make "" ~cursor (); quitting = false }
+let initial_model =
+  {
+    text = Text_input.make "" ~placeholder:"Type something" ~cursor ();
+    quitting = false;
+  }
+
 let init _ = Command.Hide_cursor
 
 let update (event : Event.t) model =
