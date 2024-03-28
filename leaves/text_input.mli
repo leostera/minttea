@@ -3,7 +3,9 @@ type t
 val make :
   string ->
   ?text_style:Spices.style ->
+  ?placeholder_style:Spices.style ->
   ?cursor:Cursor.t ->
+  ?placeholder:string ->
   ?prompt:string ->
   unit ->
   t

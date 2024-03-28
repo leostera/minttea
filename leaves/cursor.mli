@@ -36,3 +36,9 @@ val focus : t -> t
 
 val unfocus : t -> t
 (** [unfocus t] hides the cursor [t]. *)
+
+val enable_blink : t -> t
+(** [enable_blink t] enables blinking for the cursor [t]. *)
+
+val disable_blink : t -> t
+(** [disable_blink t] disables blinking for the cursor [t]. *)

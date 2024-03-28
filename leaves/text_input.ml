@@ -1,15 +1,21 @@
 type t = {
   value : string;
-  pos : int;
-  cursor : Cursor.t;
+  placeholder : string;
   prompt : string;
+  last_action : float;
+  (* cursor *)
+  cursor : Cursor.t;
+  pos : int;
+  (* styles *)
   text_style : Spices.style;
+  placeholder_style : Spices.style;
 }
 
 (* Utils *)
 open struct
   let cursor_at_beginning t = t.pos = 0
   let cursor_at_end t = t.pos = String.length t.value
+  let now_secs () = Ptime_clock.now () |> Ptime.to_float_s
 
   (** Cursor will be at the start of the right part. *)
   let split s ~at =
@@ -19,35 +25,68 @@ open struct
 end
 
 let default_prompt = "> "
+let default_placeholder = ""
 let default_text_style = Spices.default
+let default_placeholder_style = Spices.default |> Spices.faint true
 let default_cursor () = Cursor.make ()
+let resume_blink_after = 0.25
 
-let make value ?(text_style = default_text_style) ?(cursor = default_cursor ())
+let make value ?(text_style = default_text_style)
+    ?(placeholder_style = default_placeholder_style)
+    ?(cursor = default_cursor ()) ?(placeholder = default_placeholder)
     ?(prompt = default_prompt) () =
-  let v, pos =
-    match value with "" -> ("", 0) | v -> (value, String.length v)
+  let value, pos =
+    if String.length value = 0 then ("", 0) else (value, String.length value)
   in
-  { value = v; pos; text_style; cursor; prompt }
+  {
+    value;
+    placeholder;
+    pos;
+    text_style;
+    placeholder_style;
+    cursor;
+    prompt;
+    last_action = now_secs ();
+  }
 
 let empty () = make "" ()
 
-let view t =
+let placeholder_view t =
+  let placeholder_style = Spices.(t.placeholder_style |> build) in
   let text_style = Spices.(t.text_style |> build) in
 
   let result = ref "" in
-  for i = 0 to String.length t.value - 1 do
-    let s = String.make 1 @@ t.value.[i] in
+
+  for i = 0 to String.length t.placeholder - 1 do
+    let s = String.make 1 @@ t.placeholder.[i] in
     let txt =
-      if i = t.pos then Cursor.view t.cursor ~text_style:t.text_style s
-      else text_style "%s" s
+      if i = 0 then Cursor.view t.cursor ~text_style:t.placeholder_style s
+      else placeholder_style "%s" s
     in
     result := !result ^ txt
   done;
 
-  if cursor_at_end t then
-    result := !result ^ Cursor.view t.cursor ~text_style:t.text_style " ";
-
   text_style "%s" t.prompt ^ !result
+
+let view t =
+  if String.length t.value = 0 then placeholder_view t
+  else
+    let text_style = Spices.(t.text_style |> build) in
+
+    let result = ref "" in
+    for i = 0 to String.length t.value - 1 do
+      let s = String.make 1 @@ t.value.[i] in
+      let txt =
+        if i = t.pos then Cursor.view t.cursor ~text_style:t.text_style s
+        else text_style "%s" s
+      in
+      result := !result ^ txt
+    done;
+
+    if cursor_at_end t then
+      result := !result ^ Cursor.view t.cursor ~text_style:t.text_style " ";
+
+    text_style "%s" t.prompt ^ !result
 
 let current_text t = t.value
 
@@ -91,20 +130,38 @@ let jump_to_end t = move_cursor t `Jump_to_end
 
 let update t (e : Minttea.Event.t) =
   match e with
-  | KeyDown (k, _) ->
-      {
-        (match k with
-        | Backspace -> backspace t
-        | Key s -> write t s
-        | Left -> character_backward t
-        | Right -> character_forward t
-        | Space -> space t
-        | Up -> jump_to_beginning t
-        | Down -> jump_to_end t
-        | Escape | Enter -> t)
-        with
-        cursor = Cursor.focus t.cursor;
-      }
-  | _ -> { t with cursor = Cursor.update t.cursor e }
+  | KeyDown (key, modifier) ->
+      let s =
+        match (key, modifier) with
+        (* Movement *)
+        | Up, _ -> jump_to_beginning t
+        | Key s, Ctrl when s = "a" -> jump_to_beginning t
+
+        | Down, _ -> jump_to_end t
+        | Key s, Ctrl when s = "e" -> jump_to_end t
+
+        | Left, _ -> character_backward t
+        | Key s, Ctrl when s = "b" -> character_backward t
+
+        | Right, _ -> character_forward t
+        | Key s, Ctrl when s = "f" -> character_forward t
+
+        (* Typing *)
+        | Backspace, _ -> backspace t
+        | Key s, _ -> write t s
+        | Space, _ -> space t
+        | Escape, _ | Enter, _ -> t
+      in
+
+      { s with cursor = Cursor.focus t.cursor; last_action = now_secs () }
+  | _ ->
+      let time_since_last_action = now_secs () -. t.last_action in
+
+      let updated_cursor =
+        if time_since_last_action <= resume_blink_after then
+          Cursor.enable_blink t.cursor
+        else t.cursor
+      in
+      { t with cursor = Cursor.update updated_cursor e }
 
 let set_text value t = { t with value } |> jump_to_end
