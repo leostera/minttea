@@ -9,7 +9,7 @@ exception Exit
 
 let rec loop renderer (app : 'model App.t) (model : 'model) =
   let event =
-    match receive () with
+    match receive_any () with
     | Timer ref -> Event.Timer ref
     | Io_loop.Input event -> event
     | message -> Event.Custom message
