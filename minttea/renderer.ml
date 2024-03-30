@@ -27,7 +27,7 @@ let same_as_last_flush t = t.buffer = t.last_render
 let lines t = t.buffer |> String.split_on_char '\n'
 
 let rec loop t =
-  match receive () with
+  match receive_any () with
   | Shutdown ->
       flush t;
       restore t
