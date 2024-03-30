@@ -1,9 +1,9 @@
 open Riot
 
 type Message.t += Timer of unit Ref.t | Shutdown
-type 'model t = { app : 'model App.t; fps : int }
+type 'model t = { app : 'model App.t; config : Config.t }
 
-let make ~app ~fps = { app; fps }
+let make ~app ~config = { app; config }
 
 exception Exit
 
@@ -55,14 +55,14 @@ let init { app; _ } initial_model renderer =
   Renderer.render renderer view;
   loop renderer app initial_model
 
-let run ({ fps; _ } as t) initial_model =
+let run ({ config; _ } as t) initial_model =
   Printexc.record_backtrace true;
   let renderer =
     spawn (fun () ->
         (* NOTE(@leostera): reintroduce this when riot brings back process-stealing *)
         (* process_flag (Priority High); *)
         let runner = Process.await_name "Minttea.runner" in
-        Renderer.run ~fps ~runner)
+        Renderer.run ~config ~runner)
   in
   let runner =
     spawn (fun () ->
