@@ -8,14 +8,10 @@
       url = "github:ocaml-tui/colors";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    minttea = {
-      url = "github:leostera/minttea";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     riot = {
       url = "github:riot-ml/riot";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.minttea.follows = "minttea";
+      inputs.minttea.follows = "/";
     };
     tty = {
       url = "github:ocaml-tui/tty";
@@ -30,7 +26,7 @@
         let
           inherit (pkgs) ocamlPackages mkShell;
           inherit (ocamlPackages) buildDunePackage;
-          version = "0.0.2";
+          version = "0.0.3+dev";
         in
           {
             devShells = {
@@ -66,7 +62,7 @@
                   (mdx.override {
                     inherit logs;
                   })
-                  inputs'.minttea.packages.spices
+                  self'.packages.spices
                 ];
                 src = ./.;
               };
