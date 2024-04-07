@@ -1,5 +1,11 @@
 open Riot
 
+module Config : sig
+  type t
+end
+
+val config : ?render_mode:[ `clear | `persist ] -> ?fps:int -> unit -> Config.t
+
 module Event : sig
   type modifier = No_modifier | Ctrl
 
@@ -46,5 +52,5 @@ val app :
   unit ->
   'model App.t
 
-val run : ?fps:int -> initial_model:'model -> 'model App.t -> unit
-val start : 'model App.t -> initial_model:'model -> unit
+val run : ?config:Config.t -> initial_model:'model -> 'model App.t -> unit
+val start : ?config:Config.t -> 'model App.t -> initial_model:'model -> unit

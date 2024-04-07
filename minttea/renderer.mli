@@ -1,6 +1,6 @@
 open Riot
 
-val run : fps:int -> runner:Pid.t -> unit
+val run : config:Config.t -> runner:Pid.t -> unit
 val render : Pid.t -> string -> unit
 val enter_alt_screen : Pid.t -> unit
 val exit_alt_screen : Pid.t -> unit
