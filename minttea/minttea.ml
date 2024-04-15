@@ -6,7 +6,7 @@ module Program = Program
 
 let app = App.make
 
-let run ?(fps = 60) ~initial_model app =
+let run ?(fps = 2) ~initial_model app =
   let prog = Program.make ~app ~fps in
   Program.run prog initial_model;
   Logger.trace (fun f -> f "terminating")
