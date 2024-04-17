@@ -46,5 +46,5 @@ let run runner =
   link runner;
   let termios = Stdin.setup () in
   let _worker = spawn_link (fun () -> loop runner) in
-  let _ = receive () in
+  let _ = receive_any () in
   Stdin.shutdown termios

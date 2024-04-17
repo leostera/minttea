@@ -14,6 +14,7 @@ type t = {
   ticker : Timer.timer;
   width : int;
   height : int;
+  render_mode : [ `clear | `persist ];
   mutable buffer : string;
   mutable last_render : string;
   mutable lines_rendered : int;
@@ -27,7 +28,7 @@ let same_as_last_flush t = t.buffer = t.last_render
 let lines t = t.buffer |> String.split_on_char '\n'
 
 let rec loop t =
-  match receive () with
+  match receive_any () with
   | Shutdown ->
       flush t;
       restore t
@@ -61,7 +62,7 @@ and flush t =
   let new_lines_this_flush = List.length new_lines in
 
   (* clean last rendered lines *)
-  if t.lines_rendered > 0 then
+  if t.render_mode = `clear && t.lines_rendered > 0 then
     for _i = 1 to t.lines_rendered - 1 do
       Terminal.clear_line ();
       Terminal.cursor_up 1
@@ -107,7 +108,8 @@ let max_fps = 120
 let cap fps = Int.max 1 (Int.min fps max_fps) |> Int.to_float
 let fps_to_float fps = 1. /. cap fps *. 1_000. |> Int64.of_float
 
-let run ~fps ~runner =
+let run ~config ~runner =
+  let Config.{ render_mode; fps } = config in
   let ticker =
     Riot.Timer.send_interval ~every:(fps_to_float fps) (self ()) Tick
     |> Result.get_ok
@@ -123,6 +125,7 @@ let run ~fps ~runner =
       is_altscreen_active = false;
       lines_rendered = 0;
       cursor_visibility = `visible;
+      render_mode;
     }
 
 let render pid output = send pid (Render output)
