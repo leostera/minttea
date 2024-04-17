@@ -41,4 +41,4 @@ let view model =
     @@ show 12 @@ Text_input.current_text model.text
 
 let app = Minttea.app ~init ~update ~view ()
-let () = Minttea.start ~initial_model app
+let () = Minttea.start ~config:(config ~render_mode: `clear ~fps: 60 ()) ~initial_model app

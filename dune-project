@@ -19,7 +19,7 @@
  (description "A longer description")
  (depends
    (ocaml (>= "5.1"))
-   (riot (= "0.0.8"))
+   (riot (= "0.0.9"))
    (mdx (and :with-test (>= "2.3.1")))
    (tty (>= "0.0.2"))
    uuseg)
