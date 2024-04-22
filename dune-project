@@ -19,9 +19,10 @@
  (description "A longer description")
  (depends
    (ocaml (>= "5.1"))
-   (riot (>= "0.0.5"))
+   (riot (= "0.0.8"))
    (mdx (and :with-test (>= "2.3.1")))
-   (tty (>= "0.0.2")))
+   (tty (>= "0.0.2"))
+   uuseg)
  (tags (tui "terminal-ui" framework riot)))
 
 (package
@@ -43,5 +44,6 @@
    (ocaml (>= "5.1"))
    (colors (>= "0.0.1"))
    (mdx (and :with-test (>= "2.3.1")))
-   (tty (>= "0.0.2")))
+   (tty (>= "0.0.2"))
+   uuseg)
  (tags (styling styles declarative framework tui "terminal-ui" apps)))

@@ -1,8 +1,40 @@
 # Changes
 
+## 0.0.3
+
+#### Mint Tea
+
+* Upgrade to Riot 0.0.8 – this release brings stability fixes, performance
+  fixes, and includes new microsecond resolution timers.
+
+* Add better trace logs
+
+* Make sure we restore and show the cursor on exit
+
+* Fix bug where alt-screen rendering cleaned extra lines - thanks @jmcavanillas 👏
+
+* Small doc fixes – thanks @sam-huckaby ✨
+
+#### Spices
+
+* Expose color type as Tty.Color.t for more flexibility and supporting fallback
+  colors
+
+* Implement rendering of padding – thanks @wonbyte 🚀
+
+#### Leaves
+
+* Add new Virtualized Table component with support for columns and moving a
+  cursor around – thanks @sabine 🧡
+
+* Progress bar now defaults color to gray if the terminal profile isn't
+  supported
+
+* Progress bar now can toggle the percentage number – thanks @wesleimp 🌈
+
 ## 0.0.2
 
-#### MintTea
+#### Mint Tea
 
 * Add support for custom events – any Riot message sent to a Mint Tea app will
   become an `Event.Custom msg` event, which enables sending data into TUIs from

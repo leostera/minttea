@@ -2,12 +2,12 @@
 <img src="https://github.com/dmmulroy/minttea/assets/2755722/e9e96e73-1f7f-4b8f-8bb1-445308dfe8bd" alt="Mint Tea Logo" width="400"/>
 
 A fun, functional, and stateful way to build terminal apps in OCaml heavily
-inspired by [BubbleTea][bubbletea]. MintTea is built on Riot and uses The Elm
+inspired by [BubbleTea][bubbletea]. Mint Tea is built on Riot and uses The Elm
 Architecture.
 
 [bubbletea]: https://github.com/charmbracelet/bubbletea
 
-<img src="./examples/views/demo.gif"/>
+<img src="https://github.com/leostera/minttea/raw/main/examples/views/demo.gif"/>
 
 ## Tutorial
 
@@ -43,7 +43,7 @@ Then we need to pin the `minttea` package to the github source:
 $ opam install minttea
 ```
 
-Opam will do some work installing minttea from the github source.
+Opam will do some work installing `minttea` from the github source.
 
 We can run `dune build` to validate the package has been installed correctly.
 
@@ -54,13 +54,13 @@ open Minttea
 ```
 
 Mint Tea programs are composed of a **model** that describes the application
-state, and tree simple functions:
+state, and three simple functions:
 
 * `init`, a function that returns the initial commands for the application to
   run
 * `update` a function that handles incoming events and updates the model
   accordingly
-* `view`, a function that renders the UI based no the data in the model
+* `view`, a function that renders the UI based on the data in the model
 
 ### The Model
 
@@ -121,16 +121,16 @@ possibility of using custom events.
 let update event model =
   match event with
   (* if we press `q` or the escape key, we exit *)
-  | Event.KeyDown (Key "q" | Escape) -> (model, Command.Quit)
+  | Event.KeyDown ((Key "q" | Escape), _modifier) -> (model, Command.Quit)
   (* if we press up or `k`, we move up in the list *)
-  | Event.KeyDown (Up | Key "k") ->
+  | Event.KeyDown ((Up | Key "k"), _modifier) ->
       let cursor =
         if model.cursor = 0 then List.length model.choices - 1
         else model.cursor - 1
       in
       ({ model with cursor }, Command.Noop)
   (* if we press down or `j`, we move down in the list *)
-  | Event.KeyDown (Down | Key "j") ->
+  | Event.KeyDown ((Down | Key "j"), _modifier) ->
       let cursor =
         if model.cursor = List.length model.choices - 1 then 0
         else model.cursor + 1
@@ -138,7 +138,7 @@ let update event model =
       ({ model with cursor }, Command.Noop)
   (* when we press enter or space we toggle the item in the list
      that the cursor points to *)
-  | Event.KeyDown (Enter | Space) ->
+  | Event.KeyDown ((Enter | Space), _modifier) ->
       let toggle status =
         match status with `selected -> `unselected | `unselected -> `selected
       in
@@ -154,8 +154,8 @@ let update event model =
   | _ -> (model, Command.Noop)
 ```
 
-You  may have noticed the special command `Quit` up there. This command tells
-Mint Tea that its time for the application to shutdown.
+You may have noticed the special command `Quit` up there. This command tells
+Mint Tea that it's time for the application to shutdown.
 
 ### The View Method
 
@@ -208,14 +208,14 @@ We can now run our application:
 
 And we get our lovely little TUI app:
 
-<img src="./examples/basic/demo.gif"/>
+<img src="https://github.com/leostera/minttea/raw/main/examples/basic/demo.gif"/>
 
 ## What's Next?
 
 This tutorial covers the very basics of building an interactive terminal UI
 with Mint Tea, but in the real world you'll also need to perform I/O.
 
-You can also check our other [examples](./examples) to see more ways in which
+You can also check our other [examples in GitHub](https://github.com/leostera/minttea/tree/main/examples) to see more ways in which
 you can build your TUIs.
 
 ## Libraries to use with Mint Tea

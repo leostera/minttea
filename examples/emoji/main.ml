@@ -70,31 +70,31 @@ let update event m =
           [ (m.player_view, m.player_pos); (Sprite.view monkey, m.monkey_pos) ]
       in
       ({ m with screen; monkey }, Command.Noop)
-  | Event.KeyDown (Down | Key "j") ->
+  | Event.KeyDown ((Down | Key "j"), _modifier) ->
       let player_pos =
         let x, y = m.player_pos in
         (x, Int.min (Tilemap.h - 1) (y + 1))
       in
       ({ m with player_pos }, Command.Noop)
-  | Event.KeyDown (Up | Key "k") ->
+  | Event.KeyDown ((Up | Key "k"), _modifier) ->
       let player_pos =
         let x, y = m.player_pos in
         (x, Int.max 0 (y - 1))
       in
       ({ m with player_pos }, Command.Noop)
-  | Event.KeyDown (Right | Key "l") ->
+  | Event.KeyDown ((Right | Key "l"), _modifier) ->
       let player_pos =
         let x, y = m.player_pos in
         (Int.min (Tilemap.w - 1) (x + 1), y)
       in
       ({ m with player_pos }, Command.Noop)
-  | Event.KeyDown (Left | Key "h") ->
+  | Event.KeyDown ((Left | Key "h"), _modifier) ->
       let player_pos =
         let x, y = m.player_pos in
         (Int.max 0 (x - 1), y)
       in
       ({ m with player_pos }, Command.Noop)
-  | Event.KeyDown (Key "q") -> (m, Command.Quit)
+  | Event.KeyDown (Key "q", _modifier) -> (m, Command.Quit)
   | _ -> (m, Command.Noop)
 
 let view m =

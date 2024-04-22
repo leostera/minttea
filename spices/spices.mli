@@ -1,7 +1,41 @@
-type color
+type color = Tty.Color.t = private
+  | RGB of int * int * int
+  | ANSI of int
+  | ANSI256 of int
+  | No_color
 
 val color : ?profile:Tty.Profile.t -> string -> color
 val gradient : start:color -> finish:color -> steps:int -> color array
+
+module Border : sig
+  type t
+
+  val make :
+    ?top:string ->
+    ?left:string ->
+    ?bottom:string ->
+    ?right:string ->
+    ?top_left:string ->
+    ?top_right:string ->
+    ?bottom_left:string ->
+    ?bottom_right:string ->
+    ?middle_left:string ->
+    ?middle_right:string ->
+    ?middle:string ->
+    ?middle_top:string ->
+    ?middle_bottom:string ->
+    unit ->
+    t
+
+  val normal : t
+  val rounded : t
+  val block : t
+  val outer_half_block : t
+  val inner_half_block : t
+  val thick : t
+  val double : t
+  val hidden : t
+end
 
 type style
 
@@ -27,6 +61,7 @@ val reverse : bool -> style -> style
 val strikethrough : bool -> style -> style
 val underline : bool -> style -> style
 val width : int option -> style -> style
+val border : Border.t -> style -> style
 
 type 'a style_fun =
   ('a, Format.formatter, unit, unit, unit, string) format6 -> 'a

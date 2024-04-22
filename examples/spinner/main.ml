@@ -25,14 +25,14 @@ let initial_model =
         ];
   }
 
-let init _ = Command.Noop
+let init _ = Command.Hide_cursor
 
 let update event model =
   match event with
   | Event.Frame now ->
       let spinners = model.spinners |> List.map (Sprite.update ~now) in
       ({ spinners }, Command.Noop)
-  | Event.KeyDown (Key "q") -> (model, Command.Quit)
+  | Event.KeyDown (Key "q", _modifier) -> (model, Command.Quit)
   | _ -> (model, Command.Noop)
 
 let view model =

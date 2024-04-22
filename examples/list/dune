@@ -1,0 +1,3 @@
+(executable
+  (name main)
+  (libraries minttea spices leaves str))

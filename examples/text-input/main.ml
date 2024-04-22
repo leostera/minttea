@@ -9,14 +9,19 @@ let white = Spices.color "#FFFFFF"
 let cursor =
   Cursor.make ~style:Spices.(default |> bg mint |> fg white |> bold true) ()
 
-let initial_model = { text = Text_input.make "" ~cursor (); quitting = false }
+let initial_model =
+  {
+    text = Text_input.make "" ~placeholder:"Type something" ~cursor ();
+    quitting = false;
+  }
+
 let init _ = Command.Hide_cursor
 
 let update (event : Event.t) model =
   let s =
     match event with
     | e ->
-        if e = Event.KeyDown Enter then
+        if e = Event.KeyDown (Enter, No_modifier) then
           ({ model with quitting = true }, Command.Quit)
         else
           let text = Text_input.update model.text e in
